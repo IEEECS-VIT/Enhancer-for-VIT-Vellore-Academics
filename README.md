@@ -27,3 +27,6 @@ The source code for the chrome extension that fixes a bunch of errors and adds s
 
 - I'm terrible with front-end design, so any beautification is appreciated.
 - No guidelines actually, just send in screenshots of your changes and I'll see if it can be merged.
+
+## License
+MIT
