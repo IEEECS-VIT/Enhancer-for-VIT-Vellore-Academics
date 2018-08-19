@@ -21,7 +21,8 @@ The source code for the chrome extension that fixes a bunch of errors and adds s
 
 ## Web Store Link
 
-- Taken down for some reason, will update as soon as it gets fixed. You're free to try locally, if that helps.
+- Current Version - 3.2
+- Find it in the chrome web store [here](https://chrome.google.com/webstore/detail/enhancer-for-vit-vellore/hafeeaangmkbibcaahfjdmmmeappjbbp?hl=en)
 
 ## Contributing
 
@@ -29,4 +30,5 @@ The source code for the chrome extension that fixes a bunch of errors and adds s
 - No guidelines actually, just send in screenshots of your changes and I'll see if it can be merged.
 
 ## License
+
 MIT
