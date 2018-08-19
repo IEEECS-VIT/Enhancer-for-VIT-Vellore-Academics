@@ -1,3 +1,10 @@
+const triggerDownloads = downloads => {
+  // alert("Contentscript is sending a message to background script: '" + contentScriptMessage  + "'");
+  chrome.extension.sendMessage({
+    message: downloads
+  });
+};
+
 const addCheckBoxes = links => {
   for (let href_number = 0; href_number < links.length; href_number++) {
     let box = document.createElement("input");
@@ -52,6 +59,134 @@ const addButton = (referenceButton, buttonValue) => {
   referenceButton.parentNode.insertBefore(button, referenceButton.nextSibling);
 };
 
+const selectAllLinks = () => {
+  let referenceLinks = document
+    .getElementsByClassName("table")[1]
+    .getElementsByClassName("sexy-input");
+  let moduleLinks = document
+    .getElementsByClassName("table")[2]
+    .getElementsByClassName("sexy-input");
+  for (let i = 0; i < referenceLinks.length; i++) {
+    referenceLinks[i]["checked"] = true;
+  }
+  for (let i = 0; i < moduleLinks.length; i++) {
+    moduleLinks[i]["checked"] = true;
+  }
+};
+
+const downloadAll = () => {
+  let detailsTable = document
+    .getElementsByClassName("table")[0]
+    .getElementsByTagName("td");
+
+  let referenceLinks = document
+    .getElementsByClassName("table")[1]
+    .getElementsByClassName("sexy-input");
+  let moduleLinks = document
+    .getElementsByClassName("table")[2]
+    .getElementsByClassName("sexy-input");
+
+  const syllabusLink =
+    document.getElementsByClassName("btn btn-primary")[0].innerText ===
+    "Download"
+      ? document.getElementsByClassName("btn btn-primary")[0].href
+      : false;
+
+  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
+  let facultySlotName =
+    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
+  facultySlotName = facultySlotName.replace(/[/]/g, "-");
+
+  let linkData = [];
+
+  if (syllabusLink) {
+    linkData.push({
+      title: "Syllabus",
+      url: syllabusLink
+    });
+  }
+
+  for (let k = 0; k < referenceLinks.length; k++) {
+    linkData.push({
+      url: referenceLinks[k].value,
+      title: ""
+    });
+  }
+
+  for (let k = 0; k < moduleLinks.length; k++) {
+    description =
+      moduleLinks[k].parentElement.parentElement.previousElementSibling
+        .innerText;
+    date =
+      moduleLinks[k].parentElement.parentElement.previousElementSibling
+        .previousElementSibling.previousElementSibling.innerText;
+    let title = (k + 1).toString() + "-" + description + "-" + date;
+    title = title.replace(/[/:*?"<>|]/g, "_");
+    linkData.push({
+      url: moduleLinks[k].value,
+      title: title
+    });
+  }
+
+  return triggerDownloads({
+    linkData: linkData,
+    course: course,
+    facultySlotName: facultySlotName
+  });
+  // triggerDownloads([linkData, course, facultySlotName]);
+};
+
+const downloadSelected = () => {
+  let detailsTable = document
+    .getElementsByClassName("table")[0]
+    .getElementsByTagName("td");
+  let referenceLinks = document
+    .getElementsByClassName("table")[1]
+    .getElementsByClassName("sexy-input");
+  let moduleLinks = document
+    .getElementsByClassName("table")[2]
+    .getElementsByClassName("sexy-input");
+
+  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
+  let facultySlotName =
+    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
+  facultySlotName = facultySlotName.replace(/[/]/g, "-");
+
+  let linkData = [];
+
+  for (let k = 0; k < referenceLinks.length; k++) {
+    if (referenceLinks[k]["checked"]) {
+      linkData.push({
+        url: referenceLinks[k].value,
+        title: ""
+      });
+    }
+  }
+
+  for (let k = 0; k < moduleLinks.length; k++) {
+    if (moduleLinks[k]["checked"]) {
+      let description =
+        moduleLinks[k].parentElement.parentElement.previousElementSibling
+          .innerText;
+      let date =
+        moduleLinks[k].parentElement.parentElement.previousElementSibling
+          .previousElementSibling.previousElementSibling.innerText;
+      let title = (k + 1).toString() + "-" + description + "-" + date;
+      title = title.replace(/[/:*?"<>|]/g, "_");
+      linkData.push({
+        url: moduleLinks[k].value,
+        title: title
+      });
+    }
+  }
+
+  return triggerDownloads({
+    linkData: linkData,
+    course: course,
+    facultySlotName: facultySlotName
+  });
+};
+
 const modifyPage = () => {
   // add selectAll checkbox
 
@@ -71,7 +206,9 @@ const modifyPage = () => {
   div.appendChild(selectAll);
 
   // add checkboxes
-  let links = document.getElementsByClassName("btn btn-link");
+  let links = [...document.getElementsByClassName("btn btn-link")].filter(
+    item => item.outerText.indexOf("Web Material") === -1
+  );
 
   addCheckBoxes(links);
 
@@ -104,103 +241,7 @@ const modifyPage = () => {
   jQuery.unblockUI();
 };
 
-const selectAllLinks = () => {
-  let links1 = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let links2 = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
-  for (let i = 0; i < links1.length; i++) {
-    links1[i]["checked"] = true;
-  }
-  for (let i = 0; i < links2.length; i++) {
-    links2[i]["checked"] = true;
-  }
-};
-
-const downloadAll = () => {
-  let detailsTable = document
-    .getElementsByClassName("table")[0]
-    .getElementsByTagName("td");
-  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
-  let facultySlotName =
-    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
-  facultySlotName = facultySlotName.replace(/[/]/g, "-");
-  let links1 = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let links2 = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
-  let selectedLinks = [];
-  let linkTitles = [];
-  for (let k = 0; k < links1.length; k++) {
-    selectedLinks.push(links1[k].value);
-    title = "";
-    linkTitles.push(title);
-  }
-  for (let k = 0; k < links2.length; k++) {
-    selectedLinks.push(links2[k].value);
-    description =
-      links2[k].parentElement.parentElement.previousElementSibling.innerText;
-    date =
-      links2[k].parentElement.parentElement.previousElementSibling
-        .previousElementSibling.previousElementSibling.innerText;
-    let title = (k + 1).toString() + "-" + description + "-" + date;
-    title = title.replace(/[/:*?"<>|]/g, "_");
-    linkTitles.push(title);
-  }
-  triggerDownloads([selectedLinks, linkTitles, course, facultySlotName]);
-};
-
-const downloadSelected = () => {
-  let detailsTable = document
-    .getElementsByClassName("table")[0]
-    .getElementsByTagName("td");
-  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
-  let facultySlotName =
-    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
-  facultySlotName = facultySlotName.replace(/[/]/g, "-");
-  let links1 = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let links2 = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
-  let selectedLinks = [];
-  let linkTitles = [];
-  for (let k = 0; k < links1.length; k++) {
-    if (links1[k]["checked"]) {
-      selectedLinkslinks.push(links1[k].value);
-      title = "";
-      linkTitles.push(title);
-    }
-  }
-  for (let k = 0; k < links2.length; k++) {
-    if (links2[k]["checked"]) {
-      selectedLinks.push(links2[k].value);
-      description =
-        links2[k].parentElement.parentElement.previousElementSibling.innerText;
-      date =
-        links2[k].parentElement.parentElement.previousElementSibling
-          .previousElementSibling.previousElementSibling.innerText;
-      let title = (k + 1).toString() + "-" + description + "-" + date;
-      title = title.replace(/[/:*?"<>|]/g, "_");
-      linkTitles.push(title);
-    }
-  }
-  triggerDownloads([selectedLinks, linkTitles, course, facultySlotName]);
-};
-
-const triggerDownloads = downloadList => {
-  // alert("Contentscript is sending a message to background script: '" + contentScriptMessage  + "'");
-  chrome.extension.sendMessage({
-    message: downloadList
-  });
-};
-
-chrome.runtime.onMessage.addListener((request, sender) => {
+chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ClearCookie?") {
     try {

@@ -1,6 +1,82 @@
 let course = "";
-let faculty_slotname = "";
+let facultySlotName = "";
 let fileRename = {};
+
+const downloadIt = request => {
+  console.log(request.message);
+
+  course = request.message.course;
+  facultySlotName = request.message.facultySlotName;
+  request.message.linkData.forEach(link => {
+    fileRename[link.url] = link.title;
+    chrome.downloads.download({
+      url: link.url,
+      conflictAction: "overwrite"
+    });
+  });
+};
+
+const returnMessage = MessageToReturn => {
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendMessage(tab.id, {
+      message: MessageToReturn
+    });
+  });
+};
+
+//to not interfere with other downloads
+const getLocation = href => {
+  let l = document.createElement("a");
+  l.href = href;
+  return l;
+};
+
+const getDownloadFileName = (fname, url) => {
+  let title = "";
+  let count = 0;
+  for (let i = 0; i < fname.length; i++) {
+    if (fname[i] === "_") {
+      count += 1;
+    }
+    if (count === 5) {
+      if (fileRename[url] == "") {
+        title = fname.substr(i + 1, fname.length);
+        break;
+      } else {
+        title = fileRename[url] + fname.substr(i, fname.length);
+        break;
+      }
+    }
+  }
+  return title;
+};
+
+chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
+  if (
+    getLocation(item.url).hostname == "vtopbeta.vit.ac.in" ||
+    (getLocation(item.url).hostname == "27.251.102.132" &&
+      course &&
+      facultySlotName)
+  ) {
+    const title = getDownloadFileName(item.filename, item.url);
+    suggest({
+      filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
+    });
+  }
+});
+
+chrome.tabs.onUpdated.addListener(() => {
+  chrome.tabs.query(
+    {
+      active: true,
+      lastFocusedWindow: true
+    },
+    function(tabs) {
+      let id = tabs[0].id;
+      returnMessage("ClearCookie?");
+    }
+  );
+});
 
 chrome.webRequest.onBeforeRequest.addListener(
   details => {
@@ -32,7 +108,7 @@ chrome.webRequest.onCompleted.addListener(
   }
 );
 
-chrome.extension.onMessage.addListener((request, sender) => {
+chrome.extension.onMessage.addListener(request => {
   // alert("Background script has received a message from contentscript:'" + request.message + "'");
   if (request.message == "YesClearCookiePls") {
     chrome.cookies.remove(
@@ -53,79 +129,4 @@ chrome.extension.onMessage.addListener((request, sender) => {
   } else {
     downloadIt(request);
   }
-});
-
-const downloadIt = request => {
-  course = request.message[2];
-  faculty_slotname = request.message[3];
-  for (let i = 0; i < request.message[0].length; i++) {
-    let url = request.message[0][i];
-    let file_name = request.message[1][i];
-    fileRename[url] = file_name;
-    chrome.downloads.download({
-      url: request.message[0][i],
-      conflictAction: "uniquify"
-    });
-  }
-};
-
-const returnMessage = MessageToReturn => {
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendMessage(tab.id, {
-      message: MessageToReturn
-    });
-  });
-};
-
-//to not interfere with other downloads
-const getLocation = href => {
-  let l = document.createElement("a");
-  l.href = href;
-  return l;
-};
-
-chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
-  if (
-    getLocation(item.url).hostname == "vtopbeta.vit.ac.in" ||
-    (getLocation(item.url).hostname == "27.251.102.132" &&
-      course &&
-      faculty_slotname)
-  ) {
-    let fname = item.filename;
-    let title = "";
-    let count = 0;
-    for (let i = 0; i < fname.length; i++) {
-      if (fname[i] == "_") {
-        count += 1;
-      }
-      if (count == 5) {
-        if (fileRename[item.url] == "") {
-          title = fname.substr(i + 1, fname.length);
-          break;
-        } else {
-          title = fileRename[item.url] + fname.substr(i, fname.length);
-          break;
-        }
-      }
-    }
-    if (course && faculty_slotname) {
-      suggest({
-        filename:
-          "VIT Downloads/" + course + "/" + faculty_slotname + "/" + title
-      });
-    }
-  }
-});
-
-chrome.tabs.onUpdated.addListener(() => {
-  chrome.tabs.query(
-    {
-      active: true,
-      lastFocusedWindow: true
-    },
-    function(tabs) {
-      let id = tabs[0].id;
-      returnMessage("ClearCookie?");
-    }
-  );
 });

@@ -1158,6 +1158,7 @@ const CaptchaParse = (imgarr)  => {
       [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255],
     ]
   };
+  
   let captcha = "";
   for (let x = 1; x < 44; x++) {
     for (let y = 1; y < 179; y++) {
@@ -1177,8 +1178,8 @@ const CaptchaParse = (imgarr)  => {
       let black = 0;
       const ch = chars.charAt(i);
       const mask = bitmaps[ch];
-      for (x = 0; x < 32; x++) {
-        for (y = 0; y < 30; y++) {
+      for (let x = 0; x < 32; x++) {
+        for (let y = 0; y < 30; y++) {
           let y1 = y + j - 30;
           let x1 = x + 12;
           if (imgarr[x1][y1] == mask[x][y] && mask[x][y] == 0) {
