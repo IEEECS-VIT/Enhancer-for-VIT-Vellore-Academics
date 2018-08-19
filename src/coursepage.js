@@ -60,31 +60,34 @@ const addButton = (referenceButton, buttonValue) => {
 };
 
 const selectAllLinks = () => {
-  let referenceLinks = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let moduleLinks = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
-  for (let i = 0; i < referenceLinks.length; i++) {
-    referenceLinks[i]["checked"] = true;
-  }
-  for (let i = 0; i < moduleLinks.length; i++) {
-    moduleLinks[i]["checked"] = true;
-  }
+  let links = [...document.getElementsByClassName("sexy-input")];
+  links.forEach(link => {
+    link["checked"] = true;
+  });
 };
 
-const downloadAll = () => {
-  let detailsTable = document
+const getLinkInfo = linkElement => {
+  // observational, reference table above has below property
+  if (linkElement.parentElement.outerText.indexOf("_") === -1) {
+    const description =
+      linkElement.parentElement.parentElement.previousElementSibling.innerText;
+    const date =
+      linkElement.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.previousElementSibling.innerText;
+    let title = (index + 1).toString() + "-" + description + "-" + date;
+    title = title.replace(/[/:*?"<>|]/g, "_");
+    return { url: linkElement.value, title: title };
+  }
+  return {
+    url: linkElement.value,
+    title: ""
+  };
+};
+
+const downloadFiles = type => {
+  const detailsTable = document
     .getElementsByClassName("table")[0]
     .getElementsByTagName("td");
-
-  let referenceLinks = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let moduleLinks = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
 
   const syllabusLink =
     document.getElementsByClassName("btn btn-primary")[0].innerText ===
@@ -92,96 +95,25 @@ const downloadAll = () => {
       ? document.getElementsByClassName("btn btn-primary")[0].href
       : false;
 
-  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
+  let allLinks = [...document.getElementsByClassName("sexy-input")];
+
+  const course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
   let facultySlotName =
     detailsTable[12].innerText + "-" + detailsTable[11].innerText;
   facultySlotName = facultySlotName.replace(/[/]/g, "-");
 
-  let linkData = [];
-
-  if (syllabusLink) {
-    linkData.push({
-      title: "Syllabus",
-      url: syllabusLink
+  allLinks = allLinks
+    .filter(link => (type === "all" ? true : link["checked"]))
+    .map(link => {
+      return getLinkInfo(link);
     });
-  }
 
-  for (let k = 0; k < referenceLinks.length; k++) {
-    linkData.push({
-      url: referenceLinks[k].value,
-      title: ""
-    });
-  }
-
-  for (let k = 0; k < moduleLinks.length; k++) {
-    description =
-      moduleLinks[k].parentElement.parentElement.previousElementSibling
-        .innerText;
-    date =
-      moduleLinks[k].parentElement.parentElement.previousElementSibling
-        .previousElementSibling.previousElementSibling.innerText;
-    let title = (k + 1).toString() + "-" + description + "-" + date;
-    title = title.replace(/[/:*?"<>|]/g, "_");
-    linkData.push({
-      url: moduleLinks[k].value,
-      title: title
-    });
+  if (syllabusLink && type === "all") {
+    allLinks.push({ title: "Syllabus", url: syllabusLink });
   }
 
   return triggerDownloads({
-    linkData: linkData,
-    course: course,
-    facultySlotName: facultySlotName
-  });
-  // triggerDownloads([linkData, course, facultySlotName]);
-};
-
-const downloadSelected = () => {
-  let detailsTable = document
-    .getElementsByClassName("table")[0]
-    .getElementsByTagName("td");
-  let referenceLinks = document
-    .getElementsByClassName("table")[1]
-    .getElementsByClassName("sexy-input");
-  let moduleLinks = document
-    .getElementsByClassName("table")[2]
-    .getElementsByClassName("sexy-input");
-
-  let course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
-  let facultySlotName =
-    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
-  facultySlotName = facultySlotName.replace(/[/]/g, "-");
-
-  let linkData = [];
-
-  for (let k = 0; k < referenceLinks.length; k++) {
-    if (referenceLinks[k]["checked"]) {
-      linkData.push({
-        url: referenceLinks[k].value,
-        title: ""
-      });
-    }
-  }
-
-  for (let k = 0; k < moduleLinks.length; k++) {
-    if (moduleLinks[k]["checked"]) {
-      let description =
-        moduleLinks[k].parentElement.parentElement.previousElementSibling
-          .innerText;
-      let date =
-        moduleLinks[k].parentElement.parentElement.previousElementSibling
-          .previousElementSibling.previousElementSibling.innerText;
-      let title = (k + 1).toString() + "-" + description + "-" + date;
-      title = title.replace(/[/:*?"<>|]/g, "_");
-      linkData.push({
-        url: moduleLinks[k].value,
-        title: title
-      });
-    }
-  }
-
-  return triggerDownloads({
-    linkData: linkData,
+    linkData: allLinks,
     course: course,
     facultySlotName: facultySlotName
   });
@@ -189,11 +121,12 @@ const downloadSelected = () => {
 
 const modifyPage = () => {
   // add selectAll checkbox
-
   let selectAll = document.createElement("input");
+
   let att1 = document.createAttribute("type");
   att1.value = "checkbox";
   selectAll.setAttributeNode(att1);
+
   let att2 = document.createAttribute("class");
   att2.value = "selectAll";
   selectAll.setAttributeNode(att2);
@@ -214,19 +147,27 @@ const modifyPage = () => {
 
   // add new buttons
   let oldButtons = document.getElementsByClassName("btn btn-primary");
-  let prevButton = oldButtons[oldButtons.length - 1];
   let downloadAllButton = oldButtons[oldButtons.length - 1];
+
+  addButton(downloadAllButton, "Download Selected Files");
+
   downloadAllButton.innerHTML = "Download All Files";
   downloadAllButton.style["backgroundColor"] = "black";
   downloadAllButton.removeAttribute("href");
 
-  addButton(prevButton, "Download Selected Files");
-
   newButtons = document.getElementsByClassName("btn btn-primary");
   let downloadSelectButton = newButtons[newButtons.length - 1];
 
-  downloadSelectButton.addEventListener("click", downloadSelected, false);
-  downloadAllButton.addEventListener("click", downloadAll, false);
+  downloadSelectButton.addEventListener(
+    "click",
+    () => downloadFiles("selected"),
+    false
+  );
+  downloadAllButton.addEventListener(
+    "click",
+    () => downloadFiles("all"),
+    false
+  );
   selectAll.addEventListener("click", selectAllLinks, false);
 
   // add credits
