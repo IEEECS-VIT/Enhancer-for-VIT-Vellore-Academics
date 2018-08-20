@@ -21,7 +21,7 @@ The source code for the chrome extension that fixes a bunch of errors and adds s
 
 ## Web Store Link
 
-- Current Version - 3.2
+- Current Version - 3.3
 - Find it in the chrome web store [here](https://chrome.google.com/webstore/detail/enhancer-for-vit-vellore/hafeeaangmkbibcaahfjdmmmeappjbbp?hl=en)
 
 ## Contributing
