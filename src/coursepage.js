@@ -62,11 +62,11 @@ const addButton = (referenceButton, buttonValue) => {
 const selectAllLinks = () => {
   let links = [...document.getElementsByClassName("sexy-input")];
   links.forEach(link => {
-    link["checked"] = true;
+    link["checked"] = document.getElementById("selectAll")["checked"];
   });
 };
 
-const getLinkInfo = linkElement => {
+const getLinkInfo = (linkElement, index) => {
   // observational, reference table above has below property
   if (linkElement.parentElement.outerText.indexOf("_") === -1) {
     const description =
@@ -103,10 +103,13 @@ const downloadFiles = type => {
   facultySlotName = facultySlotName.replace(/[/]/g, "-");
 
   allLinks = allLinks
-    .filter(link => (type === "all" ? true : link["checked"]))
-    .map(link => {
-      return getLinkInfo(link);
-    });
+    .map((link, index) => {
+      if (link["checked"] || type === "all") {
+        return getLinkInfo(link, index);
+      }
+      return null;
+    })
+    .filter(value => value);
 
   if (syllabusLink && type === "all") {
     allLinks.push({ title: "Syllabus", url: syllabusLink });
@@ -127,7 +130,7 @@ const modifyPage = () => {
   att1.value = "checkbox";
   selectAll.setAttributeNode(att1);
 
-  let att2 = document.createAttribute("class");
+  let att2 = document.createAttribute("id");
   att2.value = "selectAll";
   selectAll.setAttributeNode(att2);
 
@@ -147,6 +150,7 @@ const modifyPage = () => {
 
   // add new buttons
   let oldButtons = document.getElementsByClassName("btn btn-primary");
+  let goBackButton = oldButtons[oldButtons.length - 2];
   let downloadAllButton = oldButtons[oldButtons.length - 1];
 
   addButton(downloadAllButton, "Download Selected Files");
@@ -154,6 +158,8 @@ const modifyPage = () => {
   downloadAllButton.innerHTML = "Download All Files";
   downloadAllButton.style["backgroundColor"] = "black";
   downloadAllButton.removeAttribute("href");
+
+  goBackButton.style["backgroundColor"] = "black";
 
   newButtons = document.getElementsByClassName("btn btn-primary");
   let downloadSelectButton = newButtons[newButtons.length - 1];
@@ -176,7 +182,7 @@ const modifyPage = () => {
   )[0];
   let credsText = document.createElement("p");
   credsText.innerHTML =
-    "<center>CoursePage Download Manager- Made with ♥, Priyansh Jain</center>";
+    '<center>CoursePage Download Manager- Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>';
   credsLocation.appendChild(credsText);
 
   jQuery.unblockUI();

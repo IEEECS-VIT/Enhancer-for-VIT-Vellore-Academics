@@ -34,18 +34,19 @@ const getLocation = href => {
 const getDownloadFileName = (fname, url) => {
   let title = "";
   let count = 0;
+  console.log("fname is", fname);
+
   for (let i = 0; i < fname.length; i++) {
     if (fname[i] === "_") {
       count += 1;
     }
     if (count === 5) {
-      if (fileRename[url] == "") {
-        title = fname.substr(i + 1, fname.length);
-        break;
-      } else {
-        title = fileRename[url] + fname.substr(i, fname.length);
-        break;
-      }
+      const filePrefix = fileRename[url] || "";
+      title =
+        filePrefix === ""
+          ? fname.substr(i + 1, fname.length)
+          : filePrefix + fname.substr(i, fname.length);
+      break;
     }
   }
   return title;
