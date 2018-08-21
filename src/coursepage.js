@@ -21,10 +21,9 @@ const triggerDownloads = downloads => {
  * Selects all the valid links in the course page
  */
 const selectAllLinks = () => {
-  let links = [...jQuery(".sexy-input")];
-  links.forEach(link => {
-    link.checked = $("#selectAll").checked;
-  });
+  let value = jQuery("#selectAll").is(":checked");
+
+  jQuery(".sexy-input").prop("checked", value);
 };
 
 /**
