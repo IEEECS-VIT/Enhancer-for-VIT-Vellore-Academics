@@ -2,9 +2,12 @@ let course = "";
 let facultySlotName = "";
 let fileRename = {};
 
-const downloadIt = request => {
-  console.log(request.message);
-
+/**
+ * @function triggerDownloads
+ * @param {Object} request
+ * Triggers downloads received from content-script
+ */
+const triggerDownloads = request => {
   course = request.message.course;
   facultySlotName = request.message.facultySlotName;
   request.message.linkData.forEach(link => {
@@ -16,6 +19,11 @@ const downloadIt = request => {
   });
 };
 
+/**
+ * @function returnMessage
+ * @param {String} MessageToReturn
+ * Sends a message to the content script
+ */
 const returnMessage = MessageToReturn => {
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendMessage(tab.id, {
@@ -25,12 +33,23 @@ const returnMessage = MessageToReturn => {
 };
 
 //to not interfere with other downloads
+/**
+ * @function getLocation
+ * @param {String} href
+ * Creates a link so hostname can be collected
+ */
 const getLocation = href => {
   let l = document.createElement("a");
   l.href = href;
   return l;
 };
 
+/**
+ * @function getDownloadFileName
+ * @param {String} fname
+ * @param {String} url
+ * Returns appropriate file title if required.
+ */
 const getDownloadFileName = (fname, url) => {
   let title = "";
   let count = 0;
@@ -52,6 +71,9 @@ const getDownloadFileName = (fname, url) => {
   return title;
 };
 
+/**
+ * Listener for changing the file name on download
+ */
 chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
   if (
     getLocation(item.url).hostname == "vtopbeta.vit.ac.in" ||
@@ -66,6 +88,9 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
   }
 });
 
+/**
+ * Listener for tab updates
+ */
 chrome.tabs.onUpdated.addListener(() => {
   chrome.tabs.query(
     {
@@ -79,6 +104,9 @@ chrome.tabs.onUpdated.addListener(() => {
   );
 });
 
+/**
+ * Fires before every request
+ */
 chrome.webRequest.onBeforeRequest.addListener(
   details => {
     let link = details["url"];
@@ -93,6 +121,10 @@ chrome.webRequest.onBeforeRequest.addListener(
     urls: ["*://vtopbeta.vit.ac.in/vtop/*"]
   }
 );
+
+/**
+ * Fires after the completion of a request
+ */
 chrome.webRequest.onCompleted.addListener(
   details => {
     let link = details["url"];
@@ -109,6 +141,9 @@ chrome.webRequest.onCompleted.addListener(
   }
 );
 
+/**
+ * Fires when a message is received from the content script
+ */
 chrome.extension.onMessage.addListener(request => {
   // alert("Background script has received a message from contentscript:'" + request.message + "'");
   if (request.message == "YesClearCookiePls") {
@@ -128,6 +163,6 @@ chrome.extension.onMessage.addListener(request => {
       }
     );
   } else {
-    downloadIt(request);
+    triggerDownloads(request);
   }
 });

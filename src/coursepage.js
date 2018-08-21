@@ -1,9 +1,21 @@
+/**
+ * @function triggerDownloads
+ * @param {Object} downloads
+ * @param {Object} downloads.linkData
+ * @param {Object} downloads.course
+ * @param {Object} downloads.facultySlotName
+ * Sends message with download information to the background script
+ */
 const triggerDownloads = downloads => {
   chrome.extension.sendMessage({
     message: downloads
   });
 };
 
+/**
+ * @function selectAllLinks
+ * Selects all the valid links in the course page
+ */
 const selectAllLinks = () => {
   let links = [...jQuery(".sexy-input")];
   links.forEach(link => {
@@ -11,6 +23,12 @@ const selectAllLinks = () => {
   });
 };
 
+/**
+ * @function getLinkInfo
+ * @param {DOMElement} linkElement
+ * @param {Number} index
+ * retreives link information, and the title
+ */
 const getLinkInfo = (linkElement, index) => {
   // observational, reference table above has below property
   const linkParent = linkElement.parentElement;
@@ -42,6 +60,12 @@ const getLinkInfo = (linkElement, index) => {
   };
 };
 
+/**
+ * @function downloadFiles
+ * @param {String} type
+ * accepted type: ["all", "selected"]
+ * Aggregates download data and pulls the trigger
+ */
 const downloadFiles = type => {
   const detailsTable = jQuery(jQuery(".table")[0]).find("td");
 
@@ -85,6 +109,10 @@ const downloadFiles = type => {
   });
 };
 
+/**
+ * @function modifyPage
+ * Called when the course page is loaded, adds the checkboxes and buttons
+ */
 const modifyPage = () => {
   // add selectAll checkbox
   jQuery("<label />")
@@ -140,13 +168,12 @@ const modifyPage = () => {
   jQuery.unblockUI();
 };
 
+// Listener for messages from background
 chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ClearCookie?") {
     try {
-      if (
-        document.getElementsByTagName("h1")[0].innerHTML === " Not Authorized "
-      ) {
+      if (jQuery("h1")[0].innerHTML === " Not Authorized ") {
         chrome.extension.sendMessage({
           message: "YesClearCookiePls"
         });
