@@ -1,6 +1,7 @@
 ﻿/**
  * @module CaptchaParser
  */
+
 /**
  * @function CaptchaParse
  * @param {ImageBitmap} imgarr
@@ -57,6 +58,11 @@ const CaptchaParse = imgarr => {
   return captcha;
 };
 
+/**
+ * @function convertURIToImageData
+ * @param {String} URI
+ * Converts a base64 encoded string to an image
+ */
 const convertURIToImageData = URI => {
   return new Promise(function(resolve, reject) {
     if (URI == null) return reject();
@@ -77,6 +83,11 @@ const convertURIToImageData = URI => {
   });
 };
 
+/**
+ * @function fillCaptcha
+ * @param {String} imgb64
+ * Fills the captcha text input
+ */
 const fillCaptcha = imgb64 => {
   const URI = imgb64;
   convertURIToImageData(URI).then(imageData => {
@@ -96,6 +107,11 @@ const fillCaptcha = imgb64 => {
   });
 };
 
+/**
+ * @function SolveCap
+ * @param {DOMElement}
+ * Does the middleman works and concludes
+ */
 const SolveCap = img => {
   const startTime = new Date().getTime();
   const im = img.src;
