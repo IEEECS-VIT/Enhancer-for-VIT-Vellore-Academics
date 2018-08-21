@@ -5,60 +5,6 @@ const triggerDownloads = downloads => {
   });
 };
 
-const addCheckBoxes = links => {
-  for (let href_number = 0; href_number < links.length; href_number++) {
-    let box = document.createElement("input");
-
-    let att = document.createAttribute("type");
-    att.value = "checkbox";
-    box.setAttributeNode(att);
-
-    let att1 = document.createAttribute("name");
-    att1.value = "downloadSelect";
-    box.setAttributeNode(att1);
-
-    let att2 = document.createAttribute("value");
-    att2.value = links[href_number].href;
-    box.setAttributeNode(att2);
-
-    let att3 = document.createAttribute("class");
-    att3.value = "sexy-input";
-    box.setAttributeNode(att3);
-
-    let att4 = document.createAttribute("data-filename");
-    att4.value = links[href_number];
-    box.setAttributeNode(att4);
-
-    links[href_number].parentNode.insertBefore(box, links[href_number]);
-  }
-};
-
-const addButton = (referenceButton, buttonValue) => {
-  let button = document.createElement("input");
-
-  let att1 = document.createAttribute("type");
-  att1.value = "button";
-  button.setAttributeNode(att1);
-
-  let att2 = document.createAttribute("class");
-  att2.value = "btn btn-primary";
-  button.setAttributeNode(att2);
-
-  let att3 = document.createAttribute("name");
-  att3.value = buttonValue;
-  button.setAttributeNode(att3);
-
-  let att4 = document.createAttribute("value");
-  att4.value = buttonValue;
-  button.setAttributeNode(att4);
-
-  let att5 = document.createAttribute("style");
-  att5.value = "padding:3px 16px;font-size:13px;background-color:black;";
-  button.setAttributeNode(att5);
-
-  referenceButton.parentNode.insertBefore(button, referenceButton.nextSibling);
-};
-
 const selectAllLinks = () => {
   let links = [...document.getElementsByClassName("sexy-input")];
   links.forEach(link => {
@@ -124,66 +70,56 @@ const downloadFiles = type => {
 
 const modifyPage = () => {
   // add selectAll checkbox
-  let selectAll = document.createElement("input");
-
-  let att1 = document.createAttribute("type");
-  att1.value = "checkbox";
-  selectAll.setAttributeNode(att1);
-
-  let att2 = document.createAttribute("id");
-  att2.value = "selectAll";
-  selectAll.setAttributeNode(att2);
-
-  let selectAllText = document.createElement("p");
-  selectAllText.innerHTML = "Select All";
-
-  let div = document.getElementsByClassName("table-responsive")[0];
-  div.appendChild(selectAllText);
-  div.appendChild(selectAll);
+  jQuery("<label />")
+    .html("<em>&nbsp;Select All</em>")
+    .prepend(
+      jQuery("<input/>", {
+        type: "checkbox",
+        class: "sexy-input",
+        id: "selectAll"
+      }).click(() => selectAllLinks())
+    )
+    .appendTo(jQuery(".table-responsive")[0]);
 
   // add checkboxes
-  let links = [...document.getElementsByClassName("btn btn-link")].filter(
-    item => item.outerText.indexOf("Web Material") === -1
+  jQuery(".btn-link:not(:contains('Web Material'))").prepend(
+    jQuery("<input/>", {
+      type: "checkbox",
+      class: "sexy-input"
+    })
   );
-
-  addCheckBoxes(links);
 
   // add new buttons
-  let oldButtons = document.getElementsByClassName("btn btn-primary");
-  let goBackButton = oldButtons[oldButtons.length - 2];
-  let downloadAllButton = oldButtons[oldButtons.length - 1];
+  jQuery(".btn-primary")
+    .last()
+    .remove();
 
-  addButton(downloadAllButton, "Download Selected Files");
+  jQuery("<input/>", {
+    type: "button",
+    class: "btn btn-primary",
+    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+    value: "Download All Files",
+    id: "downloadAll"
+  })
+    .click(() => downloadFiles("all"))
+    .insertAfter(jQuery(".btn-primary").last());
 
-  downloadAllButton.innerHTML = "Download All Files";
-  downloadAllButton.style["backgroundColor"] = "black";
-  downloadAllButton.removeAttribute("href");
-
-  goBackButton.style["backgroundColor"] = "black";
-
-  newButtons = document.getElementsByClassName("btn btn-primary");
-  let downloadSelectButton = newButtons[newButtons.length - 1];
-
-  downloadSelectButton.addEventListener(
-    "click",
-    () => downloadFiles("selected"),
-    false
-  );
-  downloadAllButton.addEventListener(
-    "click",
-    () => downloadFiles("all"),
-    false
-  );
-  selectAll.addEventListener("click", selectAllLinks, false);
+  jQuery("<input/>", {
+    type: "button",
+    class: "btn btn-primary",
+    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+    value: "Download Selected Files",
+    id: "downloadSelected"
+  })
+    .click(() => downloadFiles("selected"))
+    .insertAfter(jQuery("#downloadAll"));
 
   // add credits
-  let credsLocation = document.getElementsByClassName(
-    "col-sm-12 col-md-11 col-md-offset-0"
-  )[0];
-  let credsText = document.createElement("p");
-  credsText.innerHTML =
-    '<center>CoursePage Download Manager- Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>';
-  credsLocation.appendChild(credsText);
+  jQuery("#page-wrapper").append(
+    jQuery("<p/>").html(
+      '<center>CoursePage Download Manager- Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
+    )
+  );
 
   jQuery.unblockUI();
 };
