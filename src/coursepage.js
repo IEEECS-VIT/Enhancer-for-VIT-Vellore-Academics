@@ -1,39 +1,49 @@
 const triggerDownloads = downloads => {
-  // alert("Contentscript is sending a message to background script: '" + contentScriptMessage  + "'");
   chrome.extension.sendMessage({
     message: downloads
   });
 };
 
 const selectAllLinks = () => {
-  let links = [...document.getElementsByClassName("sexy-input")];
+  let links = [...jQuery(".sexy-input")];
   links.forEach(link => {
-    link["checked"] = document.getElementById("selectAll")["checked"];
+    link.checked = $("#selectAll").checked;
   });
 };
 
 const getLinkInfo = (linkElement, index) => {
   // observational, reference table above has below property
-  if (linkElement.parentElement.outerText.indexOf("_") === -1) {
-    const description =
-      linkElement.parentElement.parentElement.previousElementSibling.innerText;
-    const date =
-      linkElement.parentElement.parentElement.previousElementSibling
-        .previousElementSibling.previousElementSibling.innerText;
-    let title = (index + 1).toString() + "-" + description + "-" + date;
-    title = title.replace(/[/:*?"<>|]/g, "_");
-    return { url: linkElement.value, title: title };
+  const linkParent = linkElement.parentElement;
+  if (linkParent.outerText.indexOf("_") === -1) {
+    const description = jQuery(linkParent)
+      .closest("td")
+      .prev()[0].innerText;
+
+    const date = jQuery(linkParent)
+      .closest("td")
+      .prev()
+      .prev()
+      .prev()[0].innerText;
+
+    let title = (
+      (index + 1).toString() +
+      "-" +
+      description +
+      "-" +
+      date
+    ).replace(/[/:*?"<>|]/g, "_");
+
+    return { url: linkParent.href, title: title };
   }
+
   return {
-    url: linkElement.value,
+    url: linkParent.href,
     title: ""
   };
 };
 
 const downloadFiles = type => {
-  const detailsTable = document
-    .getElementsByClassName("table")[0]
-    .getElementsByTagName("td");
+  const detailsTable = jQuery(jQuery(".table")[0]).find("td");
 
   const syllabusLink =
     document.getElementsByClassName("btn btn-primary")[0].innerText ===
@@ -41,13 +51,20 @@ const downloadFiles = type => {
       ? document.getElementsByClassName("btn btn-primary")[0].href
       : false;
 
-  let allLinks = [...document.getElementsByClassName("sexy-input")];
+  const syllabusButton = jQuery(".btn-primary")[0];
 
   const course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
-  let facultySlotName =
-    detailsTable[12].innerText + "-" + detailsTable[11].innerText;
-  facultySlotName = facultySlotName.replace(/[/]/g, "-");
 
+  const facultySlotName = (
+    detailsTable[12].innerText +
+    "-" +
+    detailsTable[11].innerText
+  ).replace(/[/:*?"<>|]/g, "-");
+
+  const syllabusLink =
+    syllabusButton.innerText === "Download" ? syllabusButton.href : false;
+
+  let allLinks = [...jQuery(".sexy-input")];
   allLinks = allLinks
     .map((link, index) => {
       if (link["checked"] || type === "all") {
@@ -75,7 +92,6 @@ const modifyPage = () => {
     .prepend(
       jQuery("<input/>", {
         type: "checkbox",
-        class: "sexy-input",
         id: "selectAll"
       }).click(() => selectAllLinks())
     )
@@ -117,7 +133,7 @@ const modifyPage = () => {
   // add credits
   jQuery("#page-wrapper").append(
     jQuery("<p/>").html(
-      '<center>CoursePage Download Manager- Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
+      '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
     )
   );
 
