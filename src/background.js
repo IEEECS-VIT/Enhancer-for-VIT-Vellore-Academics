@@ -1,3 +1,7 @@
+/**
+ * @module Background
+ */
+
 let course = "";
 let facultySlotName = "";
 let fileRename = {};

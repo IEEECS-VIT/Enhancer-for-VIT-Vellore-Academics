@@ -1,4 +1,8 @@
 /**
+ * @module CoursePage
+ */
+
+/**
  * @function triggerDownloads
  * @param {Object} downloads
  * @param {Object} downloads.linkData
@@ -178,7 +182,9 @@ chrome.runtime.onMessage.addListener(request => {
           message: "YesClearCookiePls"
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   } else if (request.message === "ReloadFacultyPage") {
     try {
       chrome.storage.local.get(["facultyHTML"], function(result) {
@@ -189,14 +195,14 @@ chrome.runtime.onMessage.addListener(request => {
         jQuery.unblockUI();
       });
     } catch (error) {
-      console.log("faced error", error);
+      console.log(error);
     }
   } else if (request.message === "StoreFacultyPage") {
     try {
       let html = jQuery("#page-wrapper .container")[0].outerHTML;
       chrome.storage.local.set({ facultyHTML: html });
     } catch (error) {
-      console.log("faced error", error);
+      console.log(error);
     }
   } else if (request.message === "ShowLoading") {
     jQuery.blockUI({
