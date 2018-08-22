@@ -72,12 +72,6 @@ const getLinkInfo = (linkElement, index) => {
 const downloadFiles = type => {
   const detailsTable = jQuery(jQuery(".table")[0]).find("td");
 
-  const syllabusLink =
-    document.getElementsByClassName("btn btn-primary")[0].innerText ===
-    "Download"
-      ? document.getElementsByClassName("btn btn-primary")[0].href
-      : false;
-
   const syllabusButton = jQuery(".btn-primary")[0];
 
   const course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
