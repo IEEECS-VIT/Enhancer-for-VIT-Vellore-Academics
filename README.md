@@ -1,6 +1,6 @@
 # Enhancer-for-VIT-Vellore-Academics
 
-An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's Academics Portal.
+An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtopbeta.vit.ac.in/vtop/).
 
 ## Features
 
