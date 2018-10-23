@@ -1,16 +1,19 @@
 # Enhancer-for-VIT-Vellore-Academics
 
-The source code for the chrome extension that fixes a bunch of errors and adds some features on VIT Vellore's Academics Portal.
+An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtopbeta.vit.ac.in/vtop/).
 
 ## Features
 
-- AutoCaptcha, saves time.
-- Course Page Download Management, saves time.
-  - Download All, Selected
+- AutoCaptcha.
+- Complete Course Page Download Management.
+  - Download All Files
+  - Selected Downloads
+  - Smart Renaming
+  - Folder Organization according to subject, teacher, slot
 - Not Authorized Error Fixed
 - Course Page `Go Back` fixed, redirects to subject page.
 
-## Local Testing
+## Local Development
 
 - Clone the source
   ```sh
@@ -27,7 +30,8 @@ The source code for the chrome extension that fixes a bunch of errors and adds s
 ## Contributing
 
 - I'm terrible with front-end design, so any beautification is appreciated.
-- No guidelines actually, just send in screenshots of your changes and I'll see if it can be merged.
+- Use `jQuery` and not `$` for your code.
+- Don't forget to attach screenshots. 
 
 ## License
 
