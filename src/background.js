@@ -86,6 +86,10 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
       facultySlotName)
   ) {
     const title = getDownloadFileName(item.filename, item.url);
+    console.log(
+      "Filename is:",
+      "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
+    );
     suggest({
       filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
     });
@@ -149,6 +153,8 @@ chrome.webRequest.onCompleted.addListener(
  * Fires when a message is received from the content script
  */
 chrome.extension.onMessage.addListener(request => {
+  console.log("Message recd: ", request.message);
+
   // alert("Background script has received a message from contentscript:'" + request.message + "'");
   if (request.message == "YesClearCookiePls") {
     chrome.cookies.remove(

@@ -38,13 +38,13 @@ const getLinkInfo = (linkElement, index) => {
   if (linkParent.outerText.indexOf("_") === -1) {
     const description = jQuery(linkParent)
       .closest("td")
-      .prev()[0].innerText;
+      .prev()[0].innerText.trim();
 
     const date = jQuery(linkParent)
       .closest("td")
       .prev()
       .prev()
-      .prev()[0].innerText;
+      .prev()[0].innerText.trim();
 
     let title = (
       (index + 1).toString() +
@@ -74,16 +74,16 @@ const downloadFiles = type => {
 
   const syllabusButton = jQuery(".btn-primary")[0];
 
-  const course = detailsTable[7].innerText + "-" + detailsTable[8].innerText;
+  const course = detailsTable[7].innerText.trim() + "-" + detailsTable[8].innerText.trim();
 
   const facultySlotName = (
-    detailsTable[12].innerText +
+    detailsTable[12].innerText.trim() +
     "-" +
-    detailsTable[11].innerText
+    detailsTable[11].innerText.trim()
   ).replace(/[/:*?"<>|]/g, "-");
 
   const syllabusLink =
-    syllabusButton.innerText === "Download" ? syllabusButton.href : false;
+    syllabusButton.innerText.trim() === "Download" ? syllabusButton.href : false;
 
   let allLinks = [...jQuery(".sexy-input")];
   allLinks = allLinks
