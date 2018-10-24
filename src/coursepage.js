@@ -38,13 +38,15 @@ const getLinkInfo = (linkElement, index) => {
   if (linkParent.outerText.indexOf("_") === -1) {
     const description = jQuery(linkParent)
       .closest("td")
-      .prev()[0].innerText.trim();
+      .prev()[0]
+      .innerText.trim();
 
     const date = jQuery(linkParent)
       .closest("td")
       .prev()
       .prev()
-      .prev()[0].innerText.trim();
+      .prev()[0]
+      .innerText.trim();
 
     let title = (
       (index + 1).toString() +
@@ -74,7 +76,8 @@ const downloadFiles = type => {
 
   const syllabusButton = jQuery(".btn-primary")[0];
 
-  const course = detailsTable[7].innerText.trim() + "-" + detailsTable[8].innerText.trim();
+  const course =
+    detailsTable[7].innerText.trim() + "-" + detailsTable[8].innerText.trim();
 
   const facultySlotName = (
     detailsTable[12].innerText.trim() +
@@ -83,7 +86,9 @@ const downloadFiles = type => {
   ).replace(/[/:*?"<>|]/g, "-");
 
   const syllabusLink =
-    syllabusButton.innerText.trim() === "Download" ? syllabusButton.href : false;
+    syllabusButton.innerText.trim() === "Download"
+      ? syllabusButton.href
+      : false;
 
   let allLinks = [...jQuery(".sexy-input")];
   allLinks = allLinks
@@ -112,57 +117,62 @@ const downloadFiles = type => {
  */
 const modifyPage = () => {
   // add selectAll checkbox
-  jQuery("<label />")
-    .html("<em>&nbsp;Select All</em>")
-    .prepend(
+
+  jQuery(document).ready(() => {
+    jQuery("<label />")
+      .html("<em>&nbsp;Select All</em>")
+      .prepend(
+        jQuery("<input/>", {
+          type: "checkbox",
+          id: "selectAll"
+        }).click(() => selectAllLinks())
+      )
+      .appendTo(jQuery(".table-responsive")[0]);
+
+    // add checkboxes
+    jQuery(".btn-link:not(:contains('Web Material'))").prepend(
       jQuery("<input/>", {
         type: "checkbox",
-        id: "selectAll"
-      }).click(() => selectAllLinks())
-    )
-    .appendTo(jQuery(".table-responsive")[0]);
+        class: "sexy-input"
+      })
+    );
 
-  // add checkboxes
-  jQuery(".btn-link:not(:contains('Web Material'))").prepend(
+    // add new buttons
+    jQuery(".btn-primary")
+      .last()
+      .remove();
+
     jQuery("<input/>", {
-      type: "checkbox",
-      class: "sexy-input"
+      type: "button",
+      class: "btn btn-primary",
+      style:
+        "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+      value: "Download All Files",
+      id: "downloadAll"
     })
-  );
+      .click(() => downloadFiles("all"))
+      .insertAfter(jQuery(".btn-primary").last());
 
-  // add new buttons
-  jQuery(".btn-primary")
-    .last()
-    .remove();
+    jQuery("<input/>", {
+      type: "button",
+      class: "btn btn-primary",
+      style:
+        "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+      value: "Download Selected Files",
+      id: "downloadSelected"
+    })
+      .click(() => downloadFiles("selected"))
+      .insertAfter(jQuery("#downloadAll"));
 
-  jQuery("<input/>", {
-    type: "button",
-    class: "btn btn-primary",
-    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
-    value: "Download All Files",
-    id: "downloadAll"
-  })
-    .click(() => downloadFiles("all"))
-    .insertAfter(jQuery(".btn-primary").last());
+    // add credits
+    jQuery("#page-wrapper").append(
+      jQuery("<p/>").html(
+        '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
+      )
+    );
 
-  jQuery("<input/>", {
-    type: "button",
-    class: "btn btn-primary",
-    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
-    value: "Download Selected Files",
-    id: "downloadSelected"
-  })
-    .click(() => downloadFiles("selected"))
-    .insertAfter(jQuery("#downloadAll"));
-
-  // add credits
-  jQuery("#page-wrapper").append(
-    jQuery("<p/>").html(
-      '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
-    )
-  );
-
-  jQuery.unblockUI();
+    jQuery.unblockUI();
+  });
 };
 
 // Listener for messages from background
