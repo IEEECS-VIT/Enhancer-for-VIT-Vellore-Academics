@@ -34,14 +34,13 @@ const selectAllLinks = () => {
  */
 const getLinkInfo = (linkElement, index) => {
   // observational, reference table above has below property
-  const linkParent = linkElement.parentElement;
-  if (linkParent.outerText.indexOf("_") === -1) {
-    const description = jQuery(linkParent)
+  if (linkElement.outerText.indexOf("_") === -1) {
+    const description = jQuery(linkElement)
       .closest("td")
       .prev()[0]
       .innerText.trim();
 
-    const date = jQuery(linkParent)
+    const date = jQuery(linkElement)
       .closest("td")
       .prev()
       .prev()
@@ -56,25 +55,21 @@ const getLinkInfo = (linkElement, index) => {
       date
     ).replace(/[/:*?"<>|]/g, "_");
 
-    return { url: linkParent.href, title: title };
+    return { url: linkElement.href, title: title };
   }
 
   return {
-    url: linkParent.href,
-    title: ""
+    url: linkElement.href,
+    title: (index + 1).toString() + "-"
   };
 };
 
 /**
- * @function downloadFiles
- * @param {String} type
- * accepted type: ["all", "selected"]
- * Aggregates download data and pulls the trigger
+ * @function getCourseInfo
+ * Returns the coursename and faculty details
  */
-const downloadFiles = type => {
+function getCourseInfo() {
   const detailsTable = jQuery(jQuery(".table")[0]).find("td");
-
-  const syllabusButton = jQuery(".btn-primary")[0];
 
   const course =
     detailsTable[7].innerText.trim() + "-" + detailsTable[8].innerText.trim();
@@ -85,6 +80,17 @@ const downloadFiles = type => {
     detailsTable[11].innerText.trim()
   ).replace(/[/:*?"<>|]/g, "-");
 
+  return { course, facultySlotName };
+}
+
+/**
+ * @function downloadFiles
+ * @param {String} type
+ * accepted type: ["all", "selected"]
+ * Aggregates download data and pulls the trigger
+ */
+const downloadFiles = type => {
+  const syllabusButton = jQuery(".btn-primary")[0];
   const syllabusLink =
     syllabusButton.innerText.trim() === "Download"
       ? syllabusButton.href
@@ -94,7 +100,7 @@ const downloadFiles = type => {
   allLinks = allLinks
     .map((link, index) => {
       if (link["checked"] || type === "all") {
-        return getLinkInfo(link, index);
+        return getLinkInfo(link.parentElement, index);
       }
       return null;
     })
@@ -103,6 +109,7 @@ const downloadFiles = type => {
   if (syllabusLink && type === "all") {
     allLinks.push({ title: "Syllabus", url: syllabusLink });
   }
+  const { course, facultySlotName } = getCourseInfo();
 
   return triggerDownloads({
     linkData: allLinks,
@@ -112,83 +119,80 @@ const downloadFiles = type => {
 };
 
 /**
- * @function modifyPage
+ * @function modifyCoursePage
  * Called when the course page is loaded, adds the checkboxes and buttons
  */
-const modifyPage = () => {
+const modifyCoursePage = () => {
   // add selectAll checkbox
+  const { course, facultySlotName } = getCourseInfo();
+  jQuery("<label />")
+    .html("<em>&nbsp;Select All</em>")
+    .prepend(
+      jQuery("<input/>", {
+        type: "checkbox",
+        id: "selectAll"
+      }).click(() => selectAllLinks())
+    )
+    .appendTo(jQuery(".table-responsive")[0]);
 
-  jQuery(document).ready(() => {
-    jQuery("<label />")
-      .html("<em>&nbsp;Select All</em>")
+  // add checkboxes
+  jQuery(".btn-link:not(:contains('Web Material'))").each((index, elem) => {
+    jQuery(elem)
+      .click(e => {
+        e.preventDefault();
+        return triggerDownloads({
+          linkData: [getLinkInfo(elem, index)],
+          course,
+          facultySlotName
+        });
+      })
       .prepend(
         jQuery("<input/>", {
           type: "checkbox",
-          id: "selectAll"
-        }).click(() => selectAllLinks())
-      )
-      .appendTo(jQuery(".table-responsive")[0]);
-
-    // add checkboxes
-    jQuery(".btn-link:not(:contains('Web Material'))").prepend(
-      jQuery("<input/>", {
-        type: "checkbox",
-        class: "sexy-input"
-      })
-    );
-
-    // add new buttons
-    jQuery(".btn-primary")
-      .last()
-      .remove();
-
-    jQuery("<input/>", {
-      type: "button",
-      class: "btn btn-primary",
-      style:
-        "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
-      value: "Download All Files",
-      id: "downloadAll"
-    })
-      .click(() => downloadFiles("all"))
-      .insertAfter(jQuery(".btn-primary").last());
-
-    jQuery("<input/>", {
-      type: "button",
-      class: "btn btn-primary",
-      style:
-        "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
-      value: "Download Selected Files",
-      id: "downloadSelected"
-    })
-      .click(() => downloadFiles("selected"))
-      .insertAfter(jQuery("#downloadAll"));
-
-    // add credits
-    jQuery("#page-wrapper").append(
-      jQuery("<p/>").html(
-        '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
-      )
-    );
-
-    jQuery.unblockUI();
+          class: "sexy-input"
+          // "data-index": index.toString()
+        })
+      );
   });
+  // add new buttons
+  jQuery(".btn-primary")
+    .last()
+    .remove();
+
+  jQuery("<input/>", {
+    type: "button",
+    class: "btn btn-primary",
+    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+    value: "Download All Files",
+    id: "downloadAll"
+  })
+    .click(() => downloadFiles("all"))
+    .insertAfter(jQuery(".btn-primary").last());
+
+  jQuery("<input/>", {
+    type: "button",
+    class: "btn btn-primary",
+    style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
+    value: "Download Selected Files",
+    id: "downloadSelected"
+  })
+    .click(() => downloadFiles("selected"))
+    .insertAfter(jQuery("#downloadAll"));
+
+  // add credits
+  jQuery("#page-wrapper").append(
+    jQuery("<p/>").html(
+      '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
+    )
+  );
+
+  jQuery.unblockUI();
 };
 
 // Listener for messages from background
 chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
-  if (request.message === "ClearCookie?") {
-    try {
-      if (jQuery("h1")[0].innerHTML === " Not Authorized ") {
-        chrome.extension.sendMessage({
-          message: "YesClearCookiePls"
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  } else if (request.message === "ReloadFacultyPage") {
+  if (request.message === "ReloadFacultyPage") {
     try {
       chrome.storage.local.get(["facultyHTML"], function(result) {
         if (!result) {
@@ -207,13 +211,11 @@ chrome.runtime.onMessage.addListener(request => {
     } catch (error) {
       console.log(error);
     }
-  } else if (request.message === "ShowLoading") {
-    jQuery.blockUI({
-      message: "<h1> Wait for it...</h1>"
-    });
-  } else {
+  } else if (request.message === "CoursePageLoaded") {
     try {
-      modifyPage();
+      jQuery(document).ready(() => {
+        modifyCoursePage();
+      });
     } catch (error) {
       console.log(error);
     }

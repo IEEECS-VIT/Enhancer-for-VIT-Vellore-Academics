@@ -24,7 +24,8 @@
         "jquery.BlockUI.js",
         "bitmaps.js",
         "captchaparser.js",
-        "coursepage.js"
+        "coursepage.js",
+        "general.js"
       ]
     }
   ]

@@ -55,23 +55,11 @@ const getLocation = href => {
  * Returns appropriate file title if required.
  */
 const getDownloadFileName = (fname, url) => {
-  let title = "";
-  let count = 0;
-  console.log("fname is", fname);
-
-  for (let i = 0; i < fname.length; i++) {
-    if (fname[i] === "_") {
-      count += 1;
-    }
-    if (count === 5) {
-      const filePrefix = fileRename[url] || "";
-      title =
-        filePrefix === ""
-          ? fname.substr(i + 1, fname.length)
-          : filePrefix + fname.substr(i, fname.length);
-      break;
-    }
-  }
+  // splits after the fifth occurence of '_'
+  fname = fname.replace(/([^_]*_){5}/, "");
+  const filePrefix = fileRename[url] || "";
+  const index = fname[0] === "_" ? 1 : 0;
+  const title = filePrefix + fname.substr(index, fname.length);
   return title;
 };
 
