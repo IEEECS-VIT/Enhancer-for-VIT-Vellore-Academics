@@ -180,7 +180,7 @@ const modifyCoursePage = () => {
     .insertAfter(jQuery("#downloadAll"));
 
   // add credits
-  jQuery("#page-wrapper").append(
+  jQuery("#main-section").append(
     jQuery("<p/>").html(
       '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>'
     )
@@ -194,11 +194,13 @@ chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ReloadFacultyPage") {
     try {
+      console.log("Tryna reload the fac page");
+
       chrome.storage.local.get(["facultyHTML"], function(result) {
         if (!result) {
           throw new Error("Invalid");
         }
-        jQuery("#page-wrapper").html(result.facultyHTML);
+        jQuery("#main-section").html(result.facultyHTML);
         jQuery.unblockUI();
       });
     } catch (error) {
@@ -206,13 +208,15 @@ chrome.runtime.onMessage.addListener(request => {
     }
   } else if (request.message === "StoreFacultyPage") {
     try {
-      let html = jQuery("#page-wrapper .container")[0].outerHTML;
+      let html = jQuery("#main-section")[0].outerHTML;
       chrome.storage.local.set({ facultyHTML: html });
     } catch (error) {
       console.log(error);
     }
   } else if (request.message === "CoursePageLoaded") {
     try {
+      console.log("will try to add credits now");
+
       jQuery(document).ready(() => {
         modifyCoursePage();
       });

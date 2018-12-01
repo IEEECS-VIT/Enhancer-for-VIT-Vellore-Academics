@@ -114,7 +114,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
   },
   {
-    urls: ["*://vtopbeta.vit.ac.in/vtop/*"]
+    urls: ["*://vtopbeta.vit.ac.in/vtop/*", "*://vtop.vit.ac.in/*"]
   }
 );
 
@@ -124,6 +124,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 chrome.webRequest.onCompleted.addListener(
   details => {
     let link = details["url"];
+    console.log("Link is:", link);
+
     if (link.indexOf("processViewStudentCourseDetail") !== -1) {
       returnMessage("CoursePageLoaded");
     } else if (link.indexOf("processbackToFilterCourse") !== -1) {
@@ -133,7 +135,7 @@ chrome.webRequest.onCompleted.addListener(
     }
   },
   {
-    urls: ["*://vtopbeta.vit.ac.in/vtop/*"]
+    urls: ["*://vtopbeta.vit.ac.in/vtop/*", "*://vtop.vit.ac.in/*"]
   }
 );
 
@@ -147,13 +149,13 @@ chrome.extension.onMessage.addListener(request => {
   if (request.message == "YesClearCookiePls") {
     chrome.cookies.remove(
       {
-        url: "https://vtopbeta.vit.ac.in/vtop/",
+        url: "https://vtop.vit.ac.in/vtop/",
         name: "JSESSIONID"
       },
       function() {
         chrome.tabs.getSelected(null, function(tab) {
           let code =
-            "window.opener.location = 'https://vtopbeta.vit.ac.in/vtop/'; window.close();";
+            "window.opener.location = 'https://vtop.vit.ac.in/vtop/'; window.close();";
           chrome.tabs.executeScript(tab.id, {
             code: code
           });
