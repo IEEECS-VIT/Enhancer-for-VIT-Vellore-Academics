@@ -2,6 +2,8 @@
  * @module CoursePage
  */
 
+let regNo;
+
 /**
  * @function triggerDownloads
  * @param {Object} downloads
@@ -14,6 +16,22 @@ const triggerDownloads = downloads => {
   chrome.extension.sendMessage({
     message: downloads
   });
+};
+
+/**
+ * @function getDownloadLink
+ * @param {String} hrefContent href present in the checkboxes
+ * @param {String} regNo Registration Number of the User
+ */
+const getDownloadLink = (hrefContent, regNo) => {
+  const url = hrefContent.substring(
+    hrefContent.indexOf("'") + 1,
+    hrefContent.lastIndexOf("'")
+  );
+  const now = new Date();
+  const params =
+    "authorizedID=" + regNo + "&x=" + encodeURIComponent(now.toUTCString());
+  return "https://vtop.vit.ac.in/vtop/" + url.trim() + "?" + params;
 };
 
 /**
@@ -55,11 +73,11 @@ const getLinkInfo = (linkElement, index) => {
       date
     ).replace(/[/:*?"<>|]/g, "_");
 
-    return { url: linkElement.href, title: title };
+    return { url: getDownloadLink(linkElement.href, regNo), title: title };
   }
 
   return {
-    url: linkElement.href,
+    url: getDownloadLink(linkElement.href, regNo),
     title: (index + 1).toString() + "-"
   };
 };
@@ -98,9 +116,12 @@ const downloadFiles = type => {
 
   let allLinks = [...jQuery(".sexy-input")];
   allLinks = allLinks
-    .map((link, index) => {
-      if (link["checked"] || type === "all") {
-        return getLinkInfo(link.parentElement, index);
+    .map((checkbox, index) => {
+      if (checkbox["checked"] || type === "all") {
+        return getLinkInfo(
+          jQuery(jQuery(".sexy-input")[index]).siblings()[0],
+          index
+        );
       }
       return null;
     })
@@ -146,6 +167,7 @@ const modifyCoursePage = () => {
           facultySlotName
         });
       })
+      .parent()
       .prepend(
         jQuery("<input/>", {
           type: "checkbox",
@@ -194,8 +216,6 @@ chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ReloadFacultyPage") {
     try {
-      console.log("Tryna reload the fac page");
-
       chrome.storage.local.get(["facultyHTML"], function(result) {
         if (!result) {
           throw new Error("Invalid");
@@ -215,9 +235,12 @@ chrome.runtime.onMessage.addListener(request => {
     }
   } else if (request.message === "CoursePageLoaded") {
     try {
-      console.log("will try to add credits now");
-
       jQuery(document).ready(() => {
+        // gets the registration number
+        regNo =
+          jQuery(".VTopHeaderStyle")[0]
+            .innerText.replace("(STUDENT)", "")
+            .trim() || "";
         modifyCoursePage();
       });
     } catch (error) {

@@ -68,16 +68,12 @@ const getDownloadFileName = (fname, url) => {
  */
 chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
   if (
-    getLocation(item.url).hostname == "vtopbeta.vit.ac.in" ||
+    getLocation(item.url).hostname == "vtop.vit.ac.in" ||
     (getLocation(item.url).hostname == "27.251.102.132" &&
       course &&
       facultySlotName)
   ) {
     const title = getDownloadFileName(item.filename, item.url);
-    console.log(
-      "Filename is:",
-      "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
-    );
     suggest({
       filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
     });
@@ -114,7 +110,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
   },
   {
-    urls: ["*://vtopbeta.vit.ac.in/vtop/*", "*://vtop.vit.ac.in/*"]
+    urls: ["*://vtop.vit.ac.in/*"]
   }
 );
 
@@ -124,7 +120,6 @@ chrome.webRequest.onBeforeRequest.addListener(
 chrome.webRequest.onCompleted.addListener(
   details => {
     let link = details["url"];
-    console.log("Link is:", link);
 
     if (link.indexOf("processViewStudentCourseDetail") !== -1) {
       returnMessage("CoursePageLoaded");
@@ -135,7 +130,7 @@ chrome.webRequest.onCompleted.addListener(
     }
   },
   {
-    urls: ["*://vtopbeta.vit.ac.in/vtop/*", "*://vtop.vit.ac.in/*"]
+    urls: ["*://vtop.vit.ac.in/*"]
   }
 );
 
@@ -143,8 +138,6 @@ chrome.webRequest.onCompleted.addListener(
  * Fires when a message is received from the content script
  */
 chrome.extension.onMessage.addListener(request => {
-  console.log("Message recd: ", request.message);
-
   // alert("Background script has received a message from contentscript:'" + request.message + "'");
   if (request.message == "YesClearCookiePls") {
     chrome.cookies.remove(

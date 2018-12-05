@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener(request => {
         });
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   } else if (request.message === "ShowLoading") {
     jQuery.blockUI({

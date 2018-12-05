@@ -2,7 +2,7 @@
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 2,
   "name": "Enhancer for VIT Vellore Academics",
-  "description": "Easier and user-friendly vtopbeta",
+  "description": "Easier and user-friendly vtop",
   "version": "3.9",
   "author": "Priyansh Jain",
   "permissions": [
@@ -10,7 +10,6 @@
     "downloads",
     "cookies",
     "storage",
-    "*://vtopbeta.vit.ac.in/vtop/*",
     "*://vtop.vit.ac.in/*"
   ],
   "background": {
@@ -19,7 +18,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://vtopbeta.vit.ac.in/vtop/*", "*://vtop.vit.ac.in/*"],
+      "matches": ["*://vtop.vit.ac.in/*"],
       "js": [
         "jquery.js",
         "jquery.BlockUI.js",

@@ -103,7 +103,6 @@ const fillCaptcha = imgb64 => {
     while (arr.length) newArr.push(arr.splice(0, 180));
     const res = CaptchaParse(newArr);
     document.getElementById("captchaCheck").value = res;
-    console.log(res);
   });
 };
 
