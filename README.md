@@ -2,11 +2,11 @@
 
 ![](https://img.shields.io/chrome-web-store/users/hafeeaangmkbibcaahfjdmmmeappjbbp.svg)
 
-An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtopbeta.vit.ac.in/vtop/).
+An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtop.vit.ac.in/vtop/).
 
 ## Features
 
-- AutoCaptcha.
+- ~~AutoCaptcha.~~ Replaced by ReCaptcha.
 - Complete Course Page Download Management.
   - Download All Files
   - Selected Downloads
