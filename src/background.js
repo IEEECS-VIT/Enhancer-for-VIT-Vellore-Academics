@@ -68,10 +68,10 @@ const getDownloadFileName = (fname, url) => {
  */
 chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
   if (
-    getLocation(item.url).hostname == "vtop.vit.ac.in" ||
-    (getLocation(item.url).hostname == "27.251.102.132" &&
-      course &&
-      facultySlotName)
+    (getLocation(item.url).hostname == "vtop.vit.ac.in" ||
+      getLocation(item.url).hostname == "27.251.102.132") &&
+    course != "" &&
+    facultySlotName != ""
   ) {
     const title = getDownloadFileName(item.filename, item.url);
     suggest({
