@@ -1,10 +1,12 @@
 # Enhancer-for-VIT-Vellore-Academics
 
-An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtopbeta.vit.ac.in/vtop/).
+![](https://img.shields.io/chrome-web-store/users/hafeeaangmkbibcaahfjdmmmeappjbbp.svg)
+
+An awesome chrome extension that fixes a bunch of errors and adds some features to VIT Vellore's [Academics Portal](https://vtop.vit.ac.in/vtop/).
 
 ## Features
 
-- AutoCaptcha.
+- ~~AutoCaptcha.~~ Replaced by ReCaptcha.
 - Complete Course Page Download Management.
   - Download All Files
   - Selected Downloads
@@ -24,7 +26,7 @@ An awesome chrome extension that fixes a bunch of errors and adds some features 
 
 ## Web Store Link
 
-- Current Version - 3.9
+- Current Version - 4.0
 - Find it in the chrome web store [here](https://chrome.google.com/webstore/detail/enhancer-for-vit-vellore/hafeeaangmkbibcaahfjdmmmeappjbbp?hl=en)
 
 ## Contributing
