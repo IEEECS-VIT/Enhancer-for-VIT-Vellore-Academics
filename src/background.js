@@ -63,6 +63,20 @@ const getDownloadFileName = (fname, url) => {
   return title;
 };
 
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { hostEquals: "vtop.vit.ac.in" }
+          })
+        ],
+        actions: [new chrome.declarativeContent.ShowPageAction()]
+      }
+    ]);
+  });
+});
 /**
  * Listener for changing the file name on download
  */
@@ -78,22 +92,6 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
       filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
     });
   }
-});
-
-/**
- * Listener for tab updates
- */
-chrome.tabs.onUpdated.addListener(() => {
-  chrome.tabs.query(
-    {
-      active: true,
-      lastFocusedWindow: true
-    },
-    function(tabs) {
-      let id = tabs[0].id;
-      returnMessage("ClearCookie?");
-    }
-  );
 });
 
 /**
@@ -138,24 +136,5 @@ chrome.webRequest.onCompleted.addListener(
  * Fires when a message is received from the content script
  */
 chrome.extension.onMessage.addListener(request => {
-  // alert("Background script has received a message from contentscript:'" + request.message + "'");
-  if (request.message == "YesClearCookiePls") {
-    chrome.cookies.remove(
-      {
-        url: "https://vtop.vit.ac.in/vtop/",
-        name: "JSESSIONID"
-      },
-      function() {
-        chrome.tabs.getSelected(null, function(tab) {
-          let code =
-            "window.opener.location = 'https://vtop.vit.ac.in/vtop/'; window.close();";
-          chrome.tabs.executeScript(tab.id, {
-            code: code
-          });
-        });
-      }
-    );
-  } else {
-    triggerDownloads(request);
-  }
+  triggerDownloads(request);
 });
