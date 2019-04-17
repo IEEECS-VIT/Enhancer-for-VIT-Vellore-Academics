@@ -25,6 +25,7 @@
         "bitmaps.js",
         "captchaparser.js",
         "coursepage.js",
+        "internalmarkspage.js",
         "general.js"
       ]
     }
