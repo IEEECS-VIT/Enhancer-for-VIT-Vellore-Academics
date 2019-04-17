@@ -9,6 +9,7 @@ const modifyInternalMarksPage = () => {
     jQuery(".tableHeader-level1").map(function() {
         
         var newTableHeader = this.innerHTML.split('\n');   
+        // Adds Class Average Weightage Header
         newTableHeader.splice(9, 0, "<td>Class Average Weightage</td>");
         this.innerHTML = newTableHeader.join('');
 
@@ -22,6 +23,7 @@ const modifyInternalMarksPage = () => {
         var classAverage = newTableContent[8].replace( /[^\d.]/g, '' );
         var classAverageWeightage = classAverage * weightage / maxMark;
 
+        // Adds Class Average Weightage Score
         newTableContent.splice(9, 0, "<td><output>"+ classAverageWeightage.toFixed(2) +"</output></td>");
 
         this.innerHTML = newTableContent.join('');
@@ -29,17 +31,13 @@ const modifyInternalMarksPage = () => {
 
     }).get();
 
-    // jQuery('.customTable-level1 > tbody').map(function() {        
-    //     console.log( jQuery('.tableContent-level1') );
-    //     this.innerHTML += "<tr> Lmao </tr>"
-    // }).get();
 
     jQuery('.customTable-level1 > tbody').map(function() {
         
         var totalClassWeightage = 0, totalUserWeightage = 0, totalMaxMark = 0, totalWeightage = 0, totalScoredMark = 0, totalClassAverage = 0;
 
+        // Calculates the total score for each category
         jQuery(this).find(".tableContent-level1").map(function() {
-            console.log(this);
             
             var tableContent = this.innerHTML.split('<td>');
 
@@ -58,6 +56,7 @@ const modifyInternalMarksPage = () => {
             totalClassWeightage += parseFloat(classWeightage);
         })       
         
+        // Adds the row to display row
         this.innerHTML += `
         <tr class='tableContent-level1' style='background: #efd2a5;' >
             <td></td>
@@ -81,15 +80,8 @@ const modifyInternalMarksPage = () => {
 chrome.runtime.onMessage.addListener(request => {
     // alert("Contentscript has received a message from from background script: '" + request.message + "'");
     if (request.message === "MarkViewPage") {
-        try {
-            jQuery(document).ready(() => {
-              // gets the registration number
-              regNo =
-                jQuery(".VTopHeaderStyle")[0]
-                  .innerText.replace("(STUDENT)", "")
-                  .trim() || "";
-                modifyInternalMarksPage();
-            });
+        try {            
+            modifyInternalMarksPage();            
         } catch (error) {
             console.log(error);
         }
