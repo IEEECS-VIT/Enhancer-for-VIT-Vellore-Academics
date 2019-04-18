@@ -118,14 +118,17 @@ chrome.webRequest.onBeforeRequest.addListener(
 chrome.webRequest.onCompleted.addListener(
   details => {
     let link = details["url"];
-
+    
     if (link.indexOf("processViewStudentCourseDetail") !== -1) {
       returnMessage("CoursePageLoaded");
     } else if (link.indexOf("processbackToFilterCourse") !== -1) {
       returnMessage("ReloadFacultyPage");
     } else if (link.indexOf("getSlotIdForCoursePage") !== -1) {
       returnMessage("StoreFacultyPage");
+    } else if (link.indexOf("doStudentMarkView") !== -1 ) {
+      returnMessage("MarkViewPage");
     }
+
   },
   {
     urls: ["*://vtop.vit.ac.in/*"]

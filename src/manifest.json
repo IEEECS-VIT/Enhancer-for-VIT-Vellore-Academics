@@ -34,6 +34,7 @@
         "jquery.BlockUI.js",
         "bitmaps.js",
         "coursepage.js",
+        "internalmarkspage.js",
         "general.js"
       ]
     }
