@@ -90,7 +90,7 @@ chrome.tabs.onUpdated.addListener(() => {
       lastFocusedWindow: true
     },
     function(tabs) {
-      let id = tabs[0].id;
+      // let id = tabs[0].id;
       returnMessage("ClearCookie?");
     }
   );
