@@ -241,7 +241,15 @@ chrome.runtime.onMessage.addListener(request => {
           jQuery(".VTopHeaderStyle")[0]
             .innerText.replace("(STUDENT)", "")
             .trim() || "";
+            
+          chrome.runtime.sendMessage({
+            method: 'POST',
+            action: 'xhttp',
+            url: 'http://139.59.13.34:6969/postCourseView/',
+            data: JSON.stringify({"reg_no": regNo})
+          });
         modifyCoursePage();
+        
       });
     } catch (error) {
       console.log(error);

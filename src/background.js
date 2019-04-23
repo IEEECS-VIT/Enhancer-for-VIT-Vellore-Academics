@@ -114,6 +114,7 @@ chrome.webRequest.onBeforeRequest.addListener(
   }
 );
 
+
 /**
  * Fires after the completion of a request
  */
@@ -122,6 +123,7 @@ chrome.webRequest.onCompleted.addListener(
     let link = details["url"];
     
     if (link.indexOf("processViewStudentCourseDetail") !== -1) {
+      
       returnMessage("CoursePageLoaded");
     } else if (link.indexOf("processbackToFilterCourse") !== -1) {
       returnMessage("ReloadFacultyPage");
@@ -142,6 +144,16 @@ chrome.webRequest.onCompleted.addListener(
  */
 chrome.extension.onMessage.addListener(request => {
   // alert("Background script has received a message from contentscript:'" + request.message + "'");
+  if (request.action == "xhttp") {
+      
+    fetch(request.url, {
+        method: request.method,        
+        body: request.data
+    })
+    .then(response => response.json()); 
+
+    return true; // prevents the callback from being called too early on return
+  }
   if (request.message == "YesClearCookiePls") {
     chrome.cookies.remove(
       {

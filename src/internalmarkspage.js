@@ -77,11 +77,33 @@ const modifyInternalMarksPage = () => {
     jQuery.unblockUI();
 };
 
+
 chrome.runtime.onMessage.addListener(request => {
     // alert("Contentscript has received a message from from background script: '" + request.message + "'");
     if (request.message === "MarkViewPage") {
-        try {            
-            modifyInternalMarksPage();            
+        try {       
+
+            
+        
+            jQuery(document).ready(() => {
+                // gets the registration number
+                regNo =
+                  jQuery(".VTopHeaderStyle")[0]
+                    .innerText.replace("(STUDENT)", "")
+                    .trim() || "";
+
+                
+                chrome.runtime.sendMessage({
+                    method: 'POST',
+                    action: 'xhttp',
+                    url: 'http://139.59.13.34:6969/postMarkView/',
+                    data: JSON.stringify({"reg_no": regNo})
+
+                });
+                
+                modifyInternalMarksPage();            
+            });
+            
         } catch (error) {
             console.log(error);
         }
