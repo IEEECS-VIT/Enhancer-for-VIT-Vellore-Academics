@@ -176,10 +176,14 @@ const modifyCoursePage = () => {
         })
       );
   });
+
+  // projects page modification
+  if (jQuery(".btn-primary").length != 2) {
+    jQuery(".btn-primary")
+      .last()
+      .remove();
+  }
   // add new buttons
-  jQuery(".btn-primary")
-    .last()
-    .remove();
 
   jQuery("<input/>", {
     type: "button",
@@ -216,7 +220,7 @@ chrome.runtime.onMessage.addListener(request => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ReloadFacultyPage") {
     try {
-      chrome.storage.local.get(["facultyHTML"], function(result) {
+      chrome.storage.local.get(["facultyHTML"], function (result) {
         if (!result) {
           throw new Error("Invalid");
         }
