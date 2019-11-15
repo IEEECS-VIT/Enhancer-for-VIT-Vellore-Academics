@@ -10,7 +10,7 @@
 *:first-child > tr:first-child > td > * {
   color: var(--main-link-color) !important;
   background: var(--main-bg-color) !important;
-  border-color: var(--main-border-color) !important;
+  border-color: var(--main-bg-color) !important;
 }
 .customTable-level1 tr.tableContent-level1 td {
   border-color: var(--main-border-color) !important;
@@ -22,7 +22,7 @@ html {
 
 html *:not(a) {
   color: var(--main-txt-color) !important;
-  border-color: var(--main-border-color) !important;
+  border-color: #00000000 !important;
   background: var(--main-bg-color) !important;
 }
 
@@ -44,6 +44,11 @@ a {
 .box {
   background: var(--main-link-color) !important;
 }
+.box-body,
+.box-footer {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
 .btn.btn-link {
   color: var(--main-link-color) !important;
 }
@@ -60,7 +65,7 @@ a:visited,
 a:visited *,
 a:active,
 a:active * {
-  color: #525f66 !important;
+  color: #5f5f5f !important;
 }
 
 input[type="radio"] {
