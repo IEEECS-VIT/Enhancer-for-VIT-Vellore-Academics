@@ -90,12 +90,12 @@ function getCourseInfo() {
   const detailsTable = jQuery(jQuery(".table")[0]).find("td");
 
   const course =
-    detailsTable[7].innerText.trim() + "-" + detailsTable[8].innerText.trim();
+    detailsTable[8].innerText.trim() + "-" + detailsTable[9].innerText.trim();
 
   const facultySlotName = (
     detailsTable[12].innerText.trim() +
     "-" +
-    detailsTable[11].innerText.trim()
+    detailsTable[13].innerText.trim()
   ).replace(/[/:*?"<>|]/g, "-");
 
   return { course, facultySlotName };
