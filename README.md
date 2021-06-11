@@ -6,7 +6,7 @@ An awesome chrome extension that fixes a bunch of errors and adds some features 
 
 ## Features
 
-- ~~AutoCaptcha.~~ Replaced by ReCaptcha.
+- AutoCaptcha
 - Complete Course Page Download Management.
   - Download All Files
   - Selected Downloads
@@ -26,7 +26,7 @@ An awesome chrome extension that fixes a bunch of errors and adds some features 
 
 ## Web Store Link
 
-- Current Version - 4.4
+- Current Version - 4.6
 - Find it in the chrome web store [here](https://chrome.google.com/webstore/detail/enhancer-for-vit-vellore/hafeeaangmkbibcaahfjdmmmeappjbbp?hl=en)
 
 ## Contributing
