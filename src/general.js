@@ -48,5 +48,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 chrome.storage.local.get(["currentTheme"], function(result) {
   console.log("result found", result);
-  if (result) setTheme(result.currentTheme);
+  if (result && result.currentTheme) setTheme(result.currentTheme);
 });

@@ -134,12 +134,12 @@ function myMain(evt) {
   const jsInitChecktimer = setInterval(checkForJS_Finish, 111);
 
   function checkForJS_Finish() {
-    if (document.getElementsByTagName("img")[1]) {
+    let element = document.querySelector('img[alt="vtopCaptcha"]');
+    if (element) {
       clearInterval(jsInitChecktimer);
-      // DO YOUR STUFF HERE.
-      SolveCap(document.getElementsByTagName("img")[1]);
+      SolveCap(element);
       let observer = new MutationObserver(function() {
-        SolveCap(document.getElementsByTagName("img")[1]);
+        SolveCap(document.querySelector('img[alt="vtopCaptcha"]'));
       });
       observer.observe(document.getElementById("captchaRefresh"), {
         childList: true
