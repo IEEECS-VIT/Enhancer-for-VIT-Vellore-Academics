@@ -32,7 +32,7 @@ An awesome chrome extension that fixes a bunch of errors and adds some features 
 
 ## Web Store Link
 
-- Current Version - 4.6
+- Current Version - 4.8
 - Find it in the chrome web store [here](https://chrome.google.com/webstore/detail/enhancer-for-vit-vellore/hafeeaangmkbibcaahfjdmmmeappjbbp?hl=en)
 
 ## Contributing

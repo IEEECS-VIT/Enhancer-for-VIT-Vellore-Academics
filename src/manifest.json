@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Enhancer for VIT Vellore Academics",
   "description": "Easier and user-friendly vtop",
-  "version": "4.7",
+  "version": "4.8",
   "author": "Priyansh Jain",
   "permissions": [
     "webRequest",
