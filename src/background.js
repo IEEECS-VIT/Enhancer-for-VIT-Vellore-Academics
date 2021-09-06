@@ -57,7 +57,8 @@ const getLocation = href => {
 const getDownloadFileName = (fname, url) => {
   // splits after the fifth occurence of '_'
   fname = fname.replace(/([^_]*_){5}/, "");
-  const filePrefix = fileRename[url] || "";
+  let filePrefix = fileRename[url] || "";
+  filePrefix = filePrefix.replace(/(\r\n|\n|\r)/gm, " ");
   const index = fname[0] === "_" ? 1 : 0;
   const title = filePrefix + fname.substr(index, fname.length);
   return title;
