@@ -11,14 +11,14 @@ let fileRename = {};
  * @param {Object} request
  * Triggers downloads received from content-script
  */
-const triggerDownloads = request => {
+const triggerDownloads = (request) => {
   course = request.message.course;
   facultySlotName = request.message.facultySlotName;
-  request.message.linkData.forEach(link => {
+  request.message.linkData.forEach((link) => {
     fileRename[link.url] = link.title;
     chrome.downloads.download({
       url: link.url,
-      conflictAction: "overwrite"
+      conflictAction: "overwrite",
     });
   });
 };
@@ -28,10 +28,10 @@ const triggerDownloads = request => {
  * @param {String} MessageToReturn
  * Sends a message to the content script
  */
-const returnMessage = MessageToReturn => {
-  chrome.tabs.getSelected(null, function(tab) {
+const returnMessage = (MessageToReturn) => {
+  chrome.tabs.getSelected(null, function (tab) {
     chrome.tabs.sendMessage(tab.id, {
-      message: MessageToReturn
+      message: MessageToReturn,
     });
   });
 };
@@ -42,7 +42,7 @@ const returnMessage = MessageToReturn => {
  * @param {String} href
  * Creates a link so hostname can be collected
  */
-const getLocation = href => {
+const getLocation = (href) => {
   let l = document.createElement("a");
   l.href = href;
   return l;
@@ -64,17 +64,17 @@ const getDownloadFileName = (fname, url) => {
   return title;
 };
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+chrome.runtime.onInstalled.addListener(function () {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([
       {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { hostEquals: "vtop.vit.ac.in" }
-          })
+            pageUrl: { hostEquals: "vtop.vit.ac.in" },
+          }),
         ],
-        actions: [new chrome.declarativeContent.ShowPageAction()]
-      }
+        actions: [new chrome.declarativeContent.ShowPageAction()],
+      },
     ]);
   });
 });
@@ -90,7 +90,7 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
   ) {
     const title = getDownloadFileName(item.filename, item.url);
     suggest({
-      filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title
+      filename: "VIT Downloads/" + course + "/" + facultySlotName + "/" + title,
     });
   }
 });
@@ -99,7 +99,7 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
  * Fires before every request
  */
 chrome.webRequest.onBeforeRequest.addListener(
-  details => {
+  (details) => {
     let link = details["url"];
     if (
       link.indexOf("processbackToFilterCourse") !== -1 ||
@@ -109,7 +109,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
   },
   {
-    urls: ["*://vtop.vit.ac.in/*"]
+    urls: ["*://vtop.vit.ac.in/*"],
   }
 );
 
@@ -117,28 +117,27 @@ chrome.webRequest.onBeforeRequest.addListener(
  * Fires after the completion of a request
  */
 chrome.webRequest.onCompleted.addListener(
-  details => {
+  (details) => {
     let link = details["url"];
-    
+
     if (link.indexOf("processViewStudentCourseDetail") !== -1) {
       returnMessage("CoursePageLoaded");
     } else if (link.indexOf("processbackToFilterCourse") !== -1) {
       returnMessage("ReloadFacultyPage");
     } else if (link.indexOf("getSlotIdForCoursePage") !== -1) {
       returnMessage("StoreFacultyPage");
-    } else if (link.indexOf("doStudentMarkView") !== -1 ) {
+    } else if (link.indexOf("doStudentMarkView") !== -1) {
       returnMessage("MarkViewPage");
     }
-
   },
   {
-    urls: ["*://vtop.vit.ac.in/*"]
+    urls: ["*://vtop.vit.ac.in/*"],
   }
 );
 
 /**
  * Fires when a message is received from the content script
  */
-chrome.extension.onMessage.addListener(request => {
+chrome.extension.onMessage.addListener((request) => {
   triggerDownloads(request);
 });

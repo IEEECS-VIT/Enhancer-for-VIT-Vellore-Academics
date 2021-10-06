@@ -39,14 +39,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   if (request.message === "ShowLoading") {
     jQuery.blockUI({
-      message: "<h1> Wait for it...</h1>"
+      message: "<h1> Wait for it...</h1>",
     });
   } else if (request.from) {
     alert(request.message);
   }
 });
 
-chrome.storage.local.get(["currentTheme"], function(result) {
+chrome.storage.local.get(["currentTheme"], function (result) {
   console.log("result found", result);
   if (result && result.currentTheme) setTheme(result.currentTheme);
 });

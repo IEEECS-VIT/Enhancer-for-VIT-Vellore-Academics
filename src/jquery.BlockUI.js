@@ -12,14 +12,14 @@
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
 
-(function() {
+(function () {
   /*jshint eqeqeq:false curly:false latedef:false */
   "use strict";
 
   function setup($) {
     $.fn._fadeIn = $.fn.fadeIn;
 
-    var noOp = $.noop || function() {};
+    var noOp = $.noop || function () {};
 
     // this bit is to ensure we don't call setExpression when we shouldn't (with extra muscle to handle
     // confusing userAgent strings on Vista)
@@ -33,22 +33,22 @@
     );
 
     // global $ methods for blocking/unblocking the entire page
-    $.blockUI = function(opts) {
+    $.blockUI = function (opts) {
       install(window, opts);
     };
-    $.unblockUI = function(opts) {
+    $.unblockUI = function (opts) {
       remove(window, opts);
     };
 
     // convenience method for quick growl-like notifications  (http://www.google.com/search?q=growl)
-    $.growlUI = function(title, message, timeout, onClose) {
+    $.growlUI = function (title, message, timeout, onClose) {
       var $m = $('<div class="growlUI"></div>');
       if (title) $m.append("<h1>" + title + "</h1>");
       if (message) $m.append("<h2>" + message + "</h2>");
       if (timeout === undefined) timeout = 3000;
 
       // Added by konapun: Set timeout to 30 seconds if this growl is moused over, like normal toast notifications
-      var callBlock = function(opts) {
+      var callBlock = function (opts) {
         opts = opts || {};
 
         $.blockUI({
@@ -59,41 +59,41 @@
           centerY: false,
           showOverlay: false,
           onUnblock: onClose,
-          css: $.blockUI.defaults.growlCSS
+          css: $.blockUI.defaults.growlCSS,
         });
       };
 
       callBlock();
       var nonmousedOpacity = $m.css("opacity");
-      $m.mouseover(function() {
+      $m.mouseover(function () {
         callBlock({
           fadeIn: 0,
-          timeout: 30000
+          timeout: 30000,
         });
 
         var displayBlock = $(".blockMsg");
         displayBlock.stop(); // cancel fadeout if it has started
         displayBlock.fadeTo(300, 1); // make it easier to read the message by removing transparency
-      }).mouseout(function() {
+      }).mouseout(function () {
         $(".blockMsg").fadeOut(1000);
       });
       // End konapun additions
     };
 
     // plugin method for blocking element content
-    $.fn.block = function(opts) {
+    $.fn.block = function (opts) {
       if (this[0] === window) {
         $.blockUI(opts);
         return this;
       }
       var fullOpts = $.extend({}, $.blockUI.defaults, opts || {});
-      this.each(function() {
+      this.each(function () {
         var $el = $(this);
         if (fullOpts.ignoreIfBlocked && $el.data("blockUI.isBlocked")) return;
         $el.unblock({ fadeOut: 0 });
       });
 
-      return this.each(function() {
+      return this.each(function () {
         if ($.css(this, "position") == "static") {
           this.style.position = "relative";
           $(this).data("blockUI.static", true);
@@ -104,12 +104,12 @@
     };
 
     // plugin method for unblocking element content
-    $.fn.unblock = function(opts) {
+    $.fn.unblock = function (opts) {
       if (this[0] === window) {
         $.unblockUI(opts);
         return this;
       }
-      return this.each(function() {
+      return this.each(function () {
         remove(this, opts);
       });
     };
@@ -139,21 +139,21 @@
         color: "#000",
         border: "3px solid #aaa",
         backgroundColor: "#fff",
-        cursor: "wait"
+        cursor: "wait",
       },
 
       // minimal style set used when themes are used
       themedCSS: {
         width: "30%",
         top: "40%",
-        left: "35%"
+        left: "35%",
       },
 
       // styles for the overlay
       overlayCSS: {
         backgroundColor: "#000",
         opacity: 0.6,
-        cursor: "wait"
+        cursor: "wait",
       },
 
       // style to replace wait cursor before unblocking to correct issue
@@ -174,7 +174,7 @@
         backgroundColor: "#000",
         "-webkit-border-radius": "10px",
         "-moz-border-radius": "10px",
-        "border-radius": "10px"
+        "border-radius": "10px",
       },
 
       // IE issues: 'about:blank' fails on HTTPS and javascript:false is s-l-o-w
@@ -248,7 +248,7 @@
       blockMsgClass: "blockMsg",
 
       // if it is already blocked, then ignore it (don't unblock and reblock)
-      ignoreIfBlocked: false
+      ignoreIfBlocked: false,
     };
 
     // private data and functions follow...
@@ -393,14 +393,14 @@
       //$([lyr1[0],lyr2[0],lyr3[0]]).appendTo(full ? 'body' : el);
       var layers = [lyr1, lyr2, lyr3],
         $par = full ? $("body") : $(el);
-      $.each(layers, function() {
+      $.each(layers, function () {
         this.appendTo($par);
       });
 
       if (opts.theme && opts.draggable && $.fn.draggable) {
         lyr3.draggable({
           handle: ".ui-dialog-titlebar",
-          cancel: "li"
+          cancel: "li",
         });
       }
 
@@ -422,7 +422,7 @@
         }
 
         // simulate fixed position
-        $.each(layers, function(i, o) {
+        $.each(layers, function (i, o) {
           var s = o[0].style;
           s.position = "absolute";
           if (i < 2) {
@@ -492,7 +492,7 @@
 
       if (opts.timeout) {
         // auto-unblock
-        var to = setTimeout(function() {
+        var to = setTimeout(function () {
           if (full) $.unblockUI(opts);
           else $(el).unblock(opts);
         }, opts.timeout);
@@ -522,10 +522,7 @@
       var els;
       if (full)
         // crazy selector to handle odd field errors in ie6/7
-        els = $("body")
-          .children()
-          .filter(".blockUI")
-          .add("body > .blockUI");
+        els = $("body").children().filter(".blockUI").add("body > .blockUI");
       else els = $el.find(">.blockUI");
 
       // fix cursor issue
@@ -538,7 +535,7 @@
 
       if (opts.fadeOut) {
         count = els.length;
-        els.stop().fadeOut(opts.fadeOut, function() {
+        els.stop().fadeOut(opts.fadeOut, function () {
           if (--count === 0) reset(els, data, opts, el);
         });
       } else reset(els, data, opts, el);
@@ -549,7 +546,7 @@
       var $el = $(el);
       if ($el.data("blockUI.isBlocked")) return;
 
-      els.each(function(i, o) {
+      els.each(function (i, o) {
         // remove via DOM calls so we don't lose event handlers
         if (this.parentNode) this.parentNode.removeChild(this);
       });
@@ -613,7 +610,7 @@
           var fwd = !e.shiftKey && e.target === els[els.length - 1];
           var back = e.shiftKey && e.target === els[0];
           if (fwd || back) {
-            setTimeout(function() {
+            setTimeout(function () {
               focus(back);
             }, 10);
             return false;
@@ -629,12 +626,7 @@
       if (target.parents("div." + opts.blockMsgClass).length > 0) return true;
 
       // allow events for content that is not being blocked
-      return (
-        target
-          .parents()
-          .children()
-          .filter("div.blockUI").length === 0
-      );
+      return target.parents().children().filter("div.blockUI").length === 0;
     }
 
     function focus(back) {

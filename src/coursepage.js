@@ -12,9 +12,9 @@ let regNo;
  * @param {Object} downloads.facultySlotName
  * Sends message with download information to the background script
  */
-const triggerDownloads = downloads => {
+const triggerDownloads = (downloads) => {
   chrome.extension.sendMessage({
-    message: downloads
+    message: downloads,
   });
 };
 
@@ -78,7 +78,7 @@ const getLinkInfo = (linkElement, index) => {
 
   return {
     url: getDownloadLink(linkElement.href, regNo),
-    title: (index + 1).toString() + "-"
+    title: (index + 1).toString() + "-",
   };
 };
 
@@ -107,7 +107,7 @@ function getCourseInfo() {
  * accepted type: ["all", "selected"]
  * Aggregates download data and pulls the trigger
  */
-const downloadFiles = type => {
+const downloadFiles = (type) => {
   const syllabusButton = jQuery(".btn-primary")[0];
   const syllabusLink =
     syllabusButton.innerText.trim() === "Download"
@@ -125,7 +125,7 @@ const downloadFiles = type => {
       }
       return null;
     })
-    .filter(value => value);
+    .filter((value) => value);
 
   if (syllabusLink && type === "all") {
     allLinks.push({ title: "Syllabus", url: syllabusLink });
@@ -135,7 +135,7 @@ const downloadFiles = type => {
   return triggerDownloads({
     linkData: allLinks,
     course: course,
-    facultySlotName: facultySlotName
+    facultySlotName: facultySlotName,
   });
 };
 
@@ -151,7 +151,7 @@ const modifyCoursePage = () => {
     .prepend(
       jQuery("<input/>", {
         type: "checkbox",
-        id: "selectAll"
+        id: "selectAll",
       }).click(() => selectAllLinks())
     )
     .appendTo(jQuery(".table-responsive")[0]);
@@ -159,19 +159,19 @@ const modifyCoursePage = () => {
   // add checkboxes
   jQuery(".btn-link:not(:contains('Web Material'))").each((index, elem) => {
     jQuery(elem)
-      .click(e => {
+      .click((e) => {
         e.preventDefault();
         return triggerDownloads({
           linkData: [getLinkInfo(elem, index)],
           course,
-          facultySlotName
+          facultySlotName,
         });
       })
       .parent()
       .prepend(
         jQuery("<input/>", {
           type: "checkbox",
-          class: "sexy-input"
+          class: "sexy-input",
           // "data-index": index.toString()
         })
       );
@@ -179,9 +179,7 @@ const modifyCoursePage = () => {
 
   // projects page modification
   if (jQuery(".btn-primary").length != 2) {
-    jQuery(".btn-primary")
-      .last()
-      .remove();
+    jQuery(".btn-primary").last().remove();
   }
   // add new buttons
 
@@ -190,7 +188,7 @@ const modifyCoursePage = () => {
     class: "btn btn-primary",
     style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
     value: "Download All Files",
-    id: "downloadAll"
+    id: "downloadAll",
   })
     .click(() => downloadFiles("all"))
     .insertAfter(jQuery(".btn-primary").last());
@@ -200,7 +198,7 @@ const modifyCoursePage = () => {
     class: "btn btn-primary",
     style: "margin:4px;padding:3px 16px;font-size:13px;background-color:black;",
     value: "Download Selected Files",
-    id: "downloadSelected"
+    id: "downloadSelected",
   })
     .click(() => downloadFiles("selected"))
     .insertAfter(jQuery("#downloadAll"));
@@ -216,7 +214,7 @@ const modifyCoursePage = () => {
 };
 
 // Listener for messages from background
-chrome.runtime.onMessage.addListener(request => {
+chrome.runtime.onMessage.addListener((request) => {
   // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message === "ReloadFacultyPage") {
     try {
