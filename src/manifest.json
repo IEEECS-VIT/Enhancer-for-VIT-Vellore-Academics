@@ -1,7 +1,7 @@
 {
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 2,
-  "name": "VTOP PRO MAX",
+  "name": "Enhancer for VIT Vellore Academics",
   "description": "Easier and user-friendly vtop",
   "version": "5.0.0",
   "author": "Priyansh Jain",
