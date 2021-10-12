@@ -38,7 +38,7 @@
         "internalmarkspage.js",
         "general.js",
         "captchaparser.js",
-        "utils.js",
+        "utils.js"
       ]
     }
   ]
