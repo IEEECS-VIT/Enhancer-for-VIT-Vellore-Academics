@@ -1,6 +1,5 @@
 // Once the DOM is ready...
 window.addEventListener("DOMContentLoaded", function () {
-  console.log(document);
   document.getElementById("themeSet").onclick = function () {
     for (let i of document.getElementsByName("themeSelect")) {
       if (i.checked) {

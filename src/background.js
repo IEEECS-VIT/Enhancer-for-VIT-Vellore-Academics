@@ -78,6 +78,7 @@ chrome.runtime.onInstalled.addListener(function () {
     ]);
   });
 });
+
 /**
  * Listener for changing the file name on download
  */

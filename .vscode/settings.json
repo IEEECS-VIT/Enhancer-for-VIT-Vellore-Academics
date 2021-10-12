@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "json.schemas": [
+    {
+      "fileMatch": ["**/manifest.json"],
+      "url": "http://json.schemastore.org/chrome-manifest"
+    }
+  ]
+}

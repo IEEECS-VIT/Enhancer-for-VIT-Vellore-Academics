@@ -27,10 +27,9 @@ function setTheme(number) {
   document.head.appendChild(link);
   link.setAttribute("href", url);
 }
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  // alert("Contentscript has received a message from from background script: '" + request.message + "'");
   if (request.message.startsWith("style")) {
-    console.log("setting theme");
     const index = request.message.split("style:")[1];
     setTheme(index);
     chrome.storage.local.set({ currentTheme: index });
@@ -38,9 +37,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.message === "ShowLoading") {
-    jQuery.blockUI({
-      message: "<h1> Wait for it...</h1>",
-    });
   } else if (request.from) {
     alert(request.message);
   }

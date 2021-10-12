@@ -112,20 +112,20 @@ const fillCaptcha = (imgb64) => {
  * Does the middleman works and concludes
  */
 const SolveCap = (img) => {
-  const startTime = new Date().getTime();
+  // const startTime = new Date().getTime();
   const im = img.src;
   fillCaptcha(im);
-  const endTime = new Date().getTime();
-  const time = endTime - startTime;
-  console.log("Captcha parsed in " + time + " ms.");
-  console.log("Made with ♥, CollegeCODE");
-  const k = document.getElementsByClassName("col-md-offset-1");
+  // const endTime = new Date().getTime();
+  // const time = endTime - startTime;
+
   const credsHolder = document.createElement("center");
   const creds = document.createTextNode(
     "AutoCaptcha - Made with ♥, CollegeCODE"
   );
   credsHolder.appendChild(creds);
-  k[0].appendChild(credsHolder);
+  document
+    .getElementsByClassName("col-md-offset-1")[0]
+    .appendChild(credsHolder);
 };
 
 window.addEventListener("load", myMain, false);

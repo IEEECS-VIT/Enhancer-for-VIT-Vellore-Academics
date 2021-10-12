@@ -33,13 +33,12 @@
         "*://vtop.vit.ac.in/*"
       ],
       "js": [
-        "jquery.js",
-        "jquery.BlockUI.js",
         "bitmaps.js",
         "coursepage.js",
         "internalmarkspage.js",
         "general.js",
-        "captchaparser.js"
+        "captchaparser.js",
+        "utils.js",
       ]
     }
   ]
