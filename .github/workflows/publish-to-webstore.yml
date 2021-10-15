@@ -1,0 +1,29 @@
+name: Publish
+
+on:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: Publish webextension
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14
+    - name: Build
+      run: |
+        npm ci
+        npm run build
+    - name: Upload & release
+      uses: mnao305/chrome-extension-upload@1.1.1
+      with:
+        file-path: dist/file.zip
+        extension-id: << extension_id >>
+        client-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        refresh-token: ${{ secrets.REFRESH_TOKEN }}
