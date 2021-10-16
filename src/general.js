@@ -30,6 +30,7 @@ function setTheme(number) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message.startsWith("style")) {
+    console.log("theme set")
     const index = request.message.split("style:")[1];
     setTheme(index);
     chrome.storage.local.set({ currentTheme: index });

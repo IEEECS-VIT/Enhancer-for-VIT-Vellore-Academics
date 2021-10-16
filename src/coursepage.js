@@ -40,16 +40,11 @@ const getDownloadLink = (hrefContent, regNo) => {
  */
 const selectAllLinks = () => {
   var checkedValue = document.getElementById("selectAll").checked;
-  checkbox = Array.from(document.querySelectorAll(".sexy-input"));
-  if (checkedValue) {
-    checkbox.forEach((boxes) => {
+  let checkbox = Array.from(document.querySelectorAll(".sexy-input"));
+  checkbox.forEach((boxes) => {
       boxes.checked = checkedValue;
-    });
-  } else {
-    checkbox.forEach((boxes) => {
-      boxes.checked = checkedValue;
-    });
-  }
+  });
+  
 };
 
 /**
@@ -125,8 +120,7 @@ const downloadFiles = (type) => {
         var siblings = function (el) {
           if (el.parentNode === null) return [];
 
-          return Array.prototype.filter.call(
-            el.parentNode.children,
+          return el.parentNode.children.filter(
             function (child) {
               return child !== el;
             }
@@ -201,7 +195,6 @@ const modifyCoursePage = () => {
   });
 
   // projects page modification
-  // TODO: Check this function
   if (document.querySelectorAll(".btn-primary").length != 2) {
     const btnLen = document.querySelectorAll(".btn-primary").length;
     const btnToRemove = document.querySelectorAll(".btn-primary")[btnLen - 1];
