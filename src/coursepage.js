@@ -39,12 +39,11 @@ const getDownloadLink = (hrefContent, regNo) => {
  * Selects all the valid links in the course page
  */
 const selectAllLinks = () => {
-  var checkedValue = document.getElementById("selectAll").checked;
+  const checkedValue = document.getElementById("selectAll").checked;
   let checkbox = Array.from(document.querySelectorAll(".sexy-input"));
   checkbox.forEach((boxes) => {
-      boxes.checked = checkedValue;
+    boxes.checked = checkedValue;
   });
-  
 };
 
 /**
@@ -117,14 +116,12 @@ const downloadFiles = (type) => {
     .map((checkbox, index) => {
       if (checkbox["checked"] || type === "all") {
         const sexyinput = document.querySelectorAll(".sexy-input")[index];
-        var siblings = function (el) {
+        const siblings = function (el) {
           if (el.parentNode === null) return [];
 
-          return el.parentNode.children.filter(
-            function (child) {
-              return child !== el;
-            }
-          );
+          return el.parentNode.children.filter(function (child) {
+            return child !== el;
+          });
         };
         return getLinkInfo(siblings(sexyinput)[0], index);
       }
@@ -166,7 +163,7 @@ const modifyCoursePage = () => {
   let arr_check = Array.from(document.querySelectorAll(".btn-link"));
   let array_checkbox = [];
   arr_check.forEach((checks) => {
-    var check = Array.from(checks.querySelectorAll("span"));
+    const check = Array.from(checks.querySelectorAll("span"));
     check.forEach((checkElem) => {
       if (!checkElem.innerHTML.includes("Web Material")) {
         array_checkbox.push(checks);
@@ -237,7 +234,7 @@ const modifyCoursePage = () => {
   const mainSection = document.getElementById("main-section");
   const creditsElem = document.createElement("p");
   creditsElem.innerHTML =
-    '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">Priyansh Jain</a></center>';
+    '<center>CoursePage Download Manager - Made with ♥, <a href="https://www.github.com/Presto412" target="_blank">IEEE-CS</a></center>';
   mainSection.appendChild(creditsElem);
 };
 
@@ -264,7 +261,7 @@ chrome.runtime.onMessage.addListener((request) => {
     }
   } else if (request.message === "CoursePageLoaded") {
     try {
-      var loader = setInterval(function () {
+      const loader = setInterval(function () {
         if (document.readyState !== "complete") return;
         clearInterval(loader);
         // gets the registration number

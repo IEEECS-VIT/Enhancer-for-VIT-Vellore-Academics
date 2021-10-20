@@ -97,24 +97,6 @@ chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
 });
 
 /**
- * Fires before every request
- */
-chrome.webRequest.onBeforeRequest.addListener(
-  (details) => {
-    let link = details["url"];
-    if (
-      link.indexOf("processbackToFilterCourse") !== -1 ||
-      link.indexOf("processViewStudentCourseDetail") !== -1
-    ) {
-      returnMessage("ShowLoading");
-    }
-  },
-  {
-    urls: ["*://vtop.vit.ac.in/*"],
-  }
-);
-
-/**
  * Fires after the completion of a request
  */
 chrome.webRequest.onCompleted.addListener(

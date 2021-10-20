@@ -112,16 +112,10 @@ const fillCaptcha = (imgb64) => {
  * Does the middleman works and concludes
  */
 const SolveCap = (img) => {
-  // const startTime = new Date().getTime();
-  const im = img.src;
-  fillCaptcha(im);
-  // const endTime = new Date().getTime();
-  // const time = endTime - startTime;
-
+  const image = img.src;
+  fillCaptcha(image);
   const credsHolder = document.createElement("center");
-  const creds = document.createTextNode(
-    "AutoCaptcha - Made with ♥, CollegeCODE"
-  );
+  const creds = document.createTextNode("AutoCaptcha - Made with ♥, IEEE-CS");
   credsHolder.appendChild(creds);
   document
     .getElementsByClassName("col-md-offset-1")[0]
