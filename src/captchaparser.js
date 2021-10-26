@@ -7,7 +7,7 @@
  * @param {ImageBitmap} imgarr
  * The main captcha parsing algorithm
  */
-const CaptchaParse = imgarr => {
+const CaptchaParse = (imgarr) => {
   let captcha = "";
   for (let x = 1; x < 44; x++) {
     for (let y = 1; y < 179; y++) {
@@ -49,7 +49,7 @@ const CaptchaParse = imgarr => {
       matches.push([perc, ch]);
     }
     captcha += matches.reduce(
-      function(a, b) {
+      function (a, b) {
         return a[0] > b[0] ? a : b;
       },
       [0, 0]
@@ -63,15 +63,15 @@ const CaptchaParse = imgarr => {
  * @param {String} URI
  * Converts a base64 encoded string to an image
  */
-const convertURIToImageData = URI => {
-  return new Promise(function(resolve, reject) {
+const convertURIToImageData = (URI) => {
+  return new Promise(function (resolve, reject) {
     if (URI == null) return reject();
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
     let image = new Image();
     image.addEventListener(
       "load",
-      function() {
+      function () {
         canvas.width = image.width;
         canvas.height = image.height;
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
@@ -88,9 +88,9 @@ const convertURIToImageData = URI => {
  * @param {String} imgb64
  * Fills the captcha text input
  */
-const fillCaptcha = imgb64 => {
+const fillCaptcha = (imgb64) => {
   const URI = imgb64;
-  convertURIToImageData(URI).then(imageData => {
+  convertURIToImageData(URI).then((imageData) => {
     let arr = [];
     let newArr = [];
     for (let i = 0; i < imageData["data"].length; i += 4) {
@@ -111,21 +111,15 @@ const fillCaptcha = imgb64 => {
  * @param {DOMElement}
  * Does the middleman works and concludes
  */
-const SolveCap = img => {
-  const startTime = new Date().getTime();
-  const im = img.src;
-  fillCaptcha(im);
-  const endTime = new Date().getTime();
-  const time = endTime - startTime;
-  console.log("Captcha parsed in " + time + " ms.");
-  console.log("Made with ♥, CollegeCODE");
-  const k = document.getElementsByClassName("col-md-offset-1");
+const SolveCap = (img) => {
+  const image = img.src;
+  fillCaptcha(image);
   const credsHolder = document.createElement("center");
-  const creds = document.createTextNode(
-    "AutoCaptcha - Made with ♥, CollegeCODE"
-  );
+  const creds = document.createTextNode("AutoCaptcha - Made with ♥, IEEE-CS");
   credsHolder.appendChild(creds);
-  k[0].appendChild(credsHolder);
+  document
+    .getElementsByClassName("col-md-offset-1")[0]
+    .appendChild(credsHolder);
 };
 
 window.addEventListener("load", myMain, false);
@@ -138,11 +132,11 @@ function myMain(evt) {
     if (element) {
       clearInterval(jsInitChecktimer);
       SolveCap(element);
-      let observer = new MutationObserver(function() {
+      let observer = new MutationObserver(function () {
         SolveCap(document.querySelector('img[alt="vtopCaptcha"]'));
       });
       observer.observe(document.getElementById("captchaRefresh"), {
-        childList: true
+        childList: true,
       });
     }
   }

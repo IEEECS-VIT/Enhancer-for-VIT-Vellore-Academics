@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Enhancer for VIT Vellore Academics",
   "description": "Easier and user-friendly vtop",
-  "version": "4.8",
+  "version": "4.9.0",
   "author": "Priyansh Jain",
   "permissions": [
     "webRequest",
@@ -14,7 +14,9 @@
     "*://vtop.vit.ac.in/*"
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": true
   },
   "page_action": {
@@ -27,15 +29,16 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://vtop.vit.ac.in/*"],
+      "matches": [
+        "*://vtop.vit.ac.in/*"
+      ],
       "js": [
-        "jquery.js",
-        "jquery.BlockUI.js",
         "bitmaps.js",
         "coursepage.js",
         "internalmarkspage.js",
         "general.js",
-        "captchaparser.js"
+        "captchaparser.js",
+        "utils.js"
       ]
     }
   ]
