@@ -98,6 +98,14 @@ function getCourseInfo() {
   return { course, facultySlotName };
 }
 
+const siblings = function (el) {
+  if (el.parentNode === null) return [];
+
+  return [...el.parentNode.children].filter(function (child) {
+    return child !== el;
+  });
+};
+
 /**
  * @function downloadFiles
  * @param {String} type
@@ -113,21 +121,8 @@ const downloadFiles = (type) => {
 
   let allLinks = Array.from(document.querySelectorAll(".sexy-input"));
   allLinks = allLinks
-    .map((checkbox, index) => {
-      if (checkbox["checked"] || type === "all") {
-        const sexyinput = document.querySelectorAll(".sexy-input")[index];
-        const siblings = function (el) {
-          if (el.parentNode === null) return [];
-
-          return el.parentNode.children.filter(function (child) {
-            return child !== el;
-          });
-        };
-        return getLinkInfo(siblings(sexyinput)[0], index);
-      }
-      return null;
-    })
-    .filter((value) => value);
+    .filter((link) => type === "all" || link["checked"])
+    .map((link, index) => getLinkInfo(siblings(link)[0], index));
 
   if (syllabusLink && type === "all") {
     allLinks.push({ title: "Syllabus", url: syllabusLink });
