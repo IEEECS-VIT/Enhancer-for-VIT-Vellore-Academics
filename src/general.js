@@ -26,6 +26,13 @@ function setTheme(number) {
   link.setAttribute("type", "text/css");
   document.head.appendChild(link);
   link.setAttribute("href", url);
+
+  url = chrome.runtime.getURL("styles/font/font1.css");
+  link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  document.head.appendChild(link);
+  link.setAttribute("href", url);
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -34,7 +41,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     setTheme(index);
     chrome.storage.local.set({ currentTheme: index });
   }
-
   if (request.from) {
     alert(request.message);
   }

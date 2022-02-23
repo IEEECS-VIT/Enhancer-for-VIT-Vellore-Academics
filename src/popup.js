@@ -116,11 +116,29 @@ window.addEventListener("DOMContentLoaded", function () {
       document.getElementById("modeText").innerHTML = "Light Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
       modeFlag = false;
+      // chrome.storage.local.set("mode", "dark");
+      chrome.tabs.query(
+        { active: true, currentWindow: true },
+        function (tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            message: "style:" + 5,
+          });
+        }
+      );
     }
     else {
       document.getElementById("modeText").innerHTML = "Dark Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
       modeFlag = true;
+      // chrome.storage.local.set("mode", "light");
+      chrome.tabs.query(
+        { active: true, currentWindow: true },
+        function (tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            message: "style:" + 0,
+          });
+        }
+      );
     }
   })
 });
