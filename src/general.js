@@ -2,7 +2,7 @@
 
 function setTheme(number) {
   let url = chrome.runtime.getURL(
-    "styles/general/dark_" + number.toString() + ".css"
+    "styles/general/theme_" + number.toString() + ".css"
   );
   while (true) {
     if (
