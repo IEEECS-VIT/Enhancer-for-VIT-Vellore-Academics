@@ -112,12 +112,12 @@ window.addEventListener("DOMContentLoaded", function () {
   let modeFlag = true;
   chrome.storage.sync.get(['mode'], function (result) {
     if (result.mode === "Dark Mode") {
-      modeFlag = true;
+      modeFlag = false;
       document.getElementById("modeText").innerHTML = "Light Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
     }
     else {
-      modeFlag = false;
+      modeFlag = true;
       document.getElementById("modeText").innerHTML = "Dark Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
     }
