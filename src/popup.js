@@ -110,13 +110,27 @@ window.addEventListener("DOMContentLoaded", function () {
   });
 
   let modeFlag = true;
+  chrome.storage.sync.get(['mode'], function (result) {
+    if (result.mode === "Dark Mode") {
+      modeFlag = true;
+      document.getElementById("modeText").innerHTML = "Light Mode";
+      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
+    }
+    else {
+      modeFlag = false;
+      document.getElementById("modeText").innerHTML = "Dark Mode";
+      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
+    }
+  });
 
   document.getElementById("mode").addEventListener("click", function () {
     if (modeFlag) {
       document.getElementById("modeText").innerHTML = "Light Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
       modeFlag = false;
-      // chrome.storage.local.set("mode", "dark");
+      chrome.storage.sync.set({ mode: "Dark Mode" }, function () {
+        console.log('Value is set to ' + value);
+      });
       chrome.tabs.query(
         { active: true, currentWindow: true },
         function (tabs) {
@@ -130,7 +144,9 @@ window.addEventListener("DOMContentLoaded", function () {
       document.getElementById("modeText").innerHTML = "Dark Mode";
       document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
       modeFlag = true;
-      // chrome.storage.local.set("mode", "light");
+      chrome.storage.sync.set({ mode: "Light Mode" }, function () {
+        console.log('Value is set to ' + value);
+      });
       chrome.tabs.query(
         { active: true, currentWindow: true },
         function (tabs) {

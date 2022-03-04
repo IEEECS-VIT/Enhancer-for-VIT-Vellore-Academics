@@ -2,14 +2,14 @@
   --main-bg-color: #1e1e1e; 
   --main-txt-color: #e5e5e5;
   --main-link-color: #e5e5e5;
-  --main-border-color: #0d0011;
+  --main-border-color: #575757;
   --main-bg-color-light: #09000c;
 }
 *:first-child > tr:first-child > td,
 *:first-child > tr:first-child > td > * {
   color: var(--main-link-color) !important;
   background: var(--main-bg-color) !important;
-  border-color: var(--main-bg-color) !important;
+  border-color: var(--main-border-color) !important;
   font-weight: normal !important;
 }
 .customTable-level1 tr.tableContent-level1 td {
@@ -82,6 +82,17 @@ a:active * {
 input[type="radio"] {
   border-width: 0 !important;
   background: none !important;
+  font-weight: normal !important;
+}
+
+table,
+table tbody,
+table thead th,
+table tbody tr,
+table tbody tr td,
+table tbody tr th,
+.form-control{
+  border: 1px solid var(--main-border-color) !important;
   font-weight: normal !important;
 }
 
