@@ -1,5 +1,5 @@
 :root {
-  --main-bg-color: #1e1e1e; 
+  --main-bg-color: #1e1e1e;
   --main-txt-color: #e5e5e5;
   --main-link-color: #e5e5e5;
   --main-border-color: #575757;
@@ -46,14 +46,42 @@ a {
   font-weight: normal !important;
 }
 .btn.btn-link {
+  border: 2px solid var(--main-link-color) !important;
   color: var(--main-link-color) !important;
   font-weight: normal !important;
 }
 .btn.btn-primary,
 .btn.btn-primary > * {
+  border: 2px solid var(--main-link-color) !important;
   color: var(--main-bg-color) !important;
   background-color: var(--main-link-color) !important;
   font-weight: normal !important;
+}
+.btn.btn-success,
+.btn.btn-success > * {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.btn.btn-info,
+.btn.btn-info > * {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.nav.nav-pills > * {
+  margin: 4px;
+  border: 2px solid var(--main-link-color) !important;
+  border-radius: 3px !important;
+}
+.nav.nav-pills > * {
+  margin: 4px;
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  border-radius: 3px !important;
 }
 a > span {
   color: var(--main-link-color) !important;
@@ -91,13 +119,20 @@ table thead th,
 table tbody tr,
 table tbody tr td,
 table tbody tr th,
-.form-control{
+.form-control {
   border: 1px solid var(--main-border-color) !important;
   font-weight: normal !important;
 }
 
-.VITLogoStyle, .VITSubLogoStyle{
+.VITLogoStyle,
+.VITSubLogoStyle {
   /* font-family: 'Times New Roman', !important; */
   font-weight: bold !important;
   padding-left: 10px !important;
+}
+
+#captchaCheck {
+  background: var(--main-txt-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
 }

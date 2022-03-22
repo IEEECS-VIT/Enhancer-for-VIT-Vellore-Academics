@@ -1,9 +1,8 @@
 @font-face {
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    src: url("ssp-r.ttf") format("truetype");
-  }
-  *:not(i):not(.fa):not(.glyphicon) {
-    font-family: 'Open Sans' !important;
-  }
-  
+  font-family: "Montserrat", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  src: url("ssp-r.ttf") format("truetype");
+}
+*:not(i):not(.fa):not(.glyphicon) {
+  font-family: "Open Sans" !important;
+}

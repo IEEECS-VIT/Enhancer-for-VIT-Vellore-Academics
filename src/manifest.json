@@ -27,6 +27,11 @@
     "styles/font/*.css",
     "styles/font/*.ttf"
   ],
+  "icons": {
+    "16": "assets/icons/16x16.png",
+    "48": "assets/icons/48x48.png",
+    "128": "assets/icons/128x128.png"
+  },
   "content_scripts": [
     {
       "matches": [

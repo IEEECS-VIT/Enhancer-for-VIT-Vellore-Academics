@@ -1,7 +1,6 @@
 // Once the DOM is ready...
 
 window.addEventListener("DOMContentLoaded", function () {
-
   document.getElementById("openDigitalAssignmentUpload").onclick = function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {
@@ -17,7 +16,6 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     });
   };
-
 
   document.getElementById("openExamSchedule").onclick = function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -80,8 +78,7 @@ window.addEventListener("DOMContentLoaded", function () {
       document.getElementById("downarrow").style.display = "none";
       document.getElementById("uparrow").style.display = "inline";
       flag = false;
-    }
-    else {
+    } else {
       document.getElementsByClassName("none")[0].style.display = "none";
       document.getElementsByClassName("none")[1].style.display = "none";
       document.getElementsByClassName("none")[2].style.display = "none";
@@ -95,51 +92,51 @@ window.addEventListener("DOMContentLoaded", function () {
   });
 
   let modeFlag = true;
-  chrome.storage.sync.get(['mode'], function (result) {
+  chrome.storage.sync.get(["mode"], function (result) {
     if (result.mode === "Dark Mode") {
       modeFlag = false;
       document.getElementById("modeText").innerHTML = "Light Mode";
-      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
-    }
-    else {
+      document
+        .getElementsByTagName("link")[3]
+        .setAttribute("href", "styles/general/darkMode.css");
+    } else {
       modeFlag = true;
       document.getElementById("modeText").innerHTML = "Dark Mode";
-      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
+      document
+        .getElementsByTagName("link")[3]
+        .setAttribute("href", "styles/general/lightMode.css");
     }
   });
 
   document.getElementById("mode").addEventListener("click", function () {
     if (modeFlag) {
       document.getElementById("modeText").innerHTML = "Light Mode";
-      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/darkMode.css");
+      document
+        .getElementsByTagName("link")[3]
+        .setAttribute("href", "styles/general/darkMode.css");
       modeFlag = false;
       chrome.storage.sync.set({ mode: "Dark Mode" }, function () {
-        console.log('Value is set to ' + value);
+        console.log("Value is set to " + value);
       });
-      chrome.tabs.query(
-        { active: true, currentWindow: true },
-        function (tabs) {
-          chrome.tabs.sendMessage(tabs[0].id, {
-            message: "style:" + 1,
-          });
-        }
-      );
-    }
-    else {
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          message: "style:" + 1,
+        });
+      });
+    } else {
       document.getElementById("modeText").innerHTML = "Dark Mode";
-      document.getElementsByTagName("link")[3].setAttribute("href", "styles/general/lightMode.css");
+      document
+        .getElementsByTagName("link")[3]
+        .setAttribute("href", "styles/general/lightMode.css");
       modeFlag = true;
       chrome.storage.sync.set({ mode: "Light Mode" }, function () {
-        console.log('Value is set to ' + value);
+        console.log("Value is set to " + value);
       });
-      chrome.tabs.query(
-        { active: true, currentWindow: true },
-        function (tabs) {
-          chrome.tabs.sendMessage(tabs[0].id, {
-            message: "style:" + 0,
-          });
-        }
-      );
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          message: "style:" + 0,
+        });
+      });
     }
-  })
+  });
 });

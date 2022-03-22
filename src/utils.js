@@ -16,7 +16,10 @@ chrome.runtime.onMessage.addListener((request) => {
 
   if (request.message == "openExamSchedule") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('examinations/StudExamSchedule')");
+    button.setAttribute(
+      "onclick",
+      "loadmydiv('examinations/StudExamSchedule')"
+    );
     button.click();
   }
 
@@ -28,26 +31,37 @@ chrome.runtime.onMessage.addListener((request) => {
 
   if (request.message == "openAcademicCalendar") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('academics/common/CalendarPreview')");
+    button.setAttribute(
+      "onclick",
+      "loadmydiv('academics/common/CalendarPreview')"
+    );
     button.click();
   }
 
   if (request.message == "openClassAttendance") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('academics/common/StudentAttendance')");
+    button.setAttribute(
+      "onclick",
+      "loadmydiv('academics/common/StudentAttendance')"
+    );
     button.click();
   }
 
   if (request.message == "openTimeTable") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('academics/common/StudentTimeTable')");
+    button.setAttribute(
+      "onclick",
+      "loadmydiv('academics/common/StudentTimeTable')"
+    );
     button.click();
   }
 
   if (request.message == "openEventRegistration") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('event/swf/loadEventRegistration')");
+    button.setAttribute(
+      "onclick",
+      "loadmydiv('event/swf/loadEventRegistration')"
+    );
     button.click();
   }
-
 });
