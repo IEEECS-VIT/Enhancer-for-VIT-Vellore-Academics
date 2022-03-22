@@ -1,0 +1,102 @@
+body {
+  font-family: "Inter", sans-serif;
+  width: 300px;
+  margin: 0px;
+}
+
+#enhancer {
+  color: black;
+  margin: 0px;
+  padding: 8%;
+}
+
+#for {
+  color: #196d98;
+}
+
+.btn {
+  height: 45px;
+  width: 275px;
+  margin-left: 12.5px;
+  margin-top: 12.5px;
+  text-align: left;
+  padding-left: 5%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.03em;
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  border: none;
+  background-color: #f0f0f0;
+}
+
+#heading {
+  text-align: center;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 28px;
+  letter-spacing: 0.03em;
+  background-color: #f0f0f0;
+  margin: 0px;
+}
+
+#content {
+  background-color: white;
+  height: 360px;
+}
+
+.last {
+  margin-bottom: 12.5px;
+}
+
+.licons {
+  float: left;
+}
+
+.ricon {
+  float: right;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+#down-button {
+  margin-top: 7px;
+}
+
+#logo {
+  vertical-align: middle;
+}
+
+.toplogo {
+  vertical-align: middle;
+}
+
+.none {
+  display: none;
+}
+
+.btn:hover svg path,
+.btn:hover {
+  background-color: #196d98;
+  color: #f0f0f0;
+  fill: #f0f0f0;
+  stroke: #f0f0f0;
+}
+
+.sunIcon {
+  display: inline;
+}
+.moonIcon {
+  display: none;
+}
+
+#uparrow {
+  display: none;
+}
+
+#downarrow {
+  display: inline;
+}

@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Enhancer for VIT Vellore Academics",
   "description": "Easier and user-friendly vtop",
-  "version": "4.9.1",
+  "version": "4.10.0",
   "author": "Priyansh Jain",
   "permissions": [
     "webRequest",
@@ -27,6 +27,11 @@
     "styles/font/*.css",
     "styles/font/*.ttf"
   ],
+  "icons": {
+    "16": "assets/icons/16x16.png",
+    "48": "assets/icons/48x48.png",
+    "128": "assets/icons/128x128.png"
+  },
   "content_scripts": [
     {
       "matches": [

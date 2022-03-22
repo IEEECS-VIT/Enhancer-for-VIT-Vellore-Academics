@@ -1,0 +1,138 @@
+:root {
+  --main-bg-color: #1e1e1e;
+  --main-txt-color: #e5e5e5;
+  --main-link-color: #e5e5e5;
+  --main-border-color: #575757;
+  --main-bg-color-light: #09000c;
+}
+*:first-child > tr:first-child > td,
+*:first-child > tr:first-child > td > * {
+  color: var(--main-link-color) !important;
+  background: var(--main-bg-color) !important;
+  border-color: var(--main-border-color) !important;
+  font-weight: normal !important;
+}
+.customTable-level1 tr.tableContent-level1 td {
+  border-color: var(--main-border-color) !important;
+  font-weight: normal !important;
+}
+
+html {
+  background: var(--main-bg-color) !important;
+  font-weight: normal !important;
+}
+
+html *:not(a) {
+  color: var(--main-txt-color) !important;
+  border-color: #00000000 !important;
+  background: var(--main-bg-color) !important;
+  font-weight: normal !important;
+}
+
+a {
+  color: var(--main-link-color) !important;
+  border: 0px !important;
+  background: var(--main-bg-color) !important;
+  font-weight: normal !important;
+}
+.box {
+  background: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.box-body,
+.box-footer {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  font-weight: normal !important;
+}
+.btn.btn-link {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.btn.btn-primary,
+.btn.btn-primary > * {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.btn.btn-success,
+.btn.btn-success > * {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.btn.btn-info,
+.btn.btn-info > * {
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+.nav.nav-pills > * {
+  margin: 4px;
+  border: 2px solid var(--main-link-color) !important;
+  border-radius: 3px !important;
+}
+.nav.nav-pills > * {
+  margin: 4px;
+  border: 2px solid var(--main-link-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+  border-radius: 3px !important;
+}
+a > span {
+  color: var(--main-link-color) !important;
+  font-weight: normal !important;
+}
+img[src]:hover,
+input[type="image"]:hover {
+  opacity: 1;
+  font-weight: normal !important;
+}
+input,
+select,
+button,
+textarea {
+  background: var(--main-bg-color-light) !important;
+  font-weight: normal !important;
+}
+a:visited,
+a:visited *,
+a:active,
+a:active * {
+  color: #e5e5e5 !important;
+  font-weight: normal !important;
+}
+
+input[type="radio"] {
+  border-width: 0 !important;
+  background: none !important;
+  font-weight: normal !important;
+}
+
+table,
+table tbody,
+table thead th,
+table tbody tr,
+table tbody tr td,
+table tbody tr th,
+.form-control {
+  border: 1px solid var(--main-border-color) !important;
+  font-weight: normal !important;
+}
+
+.VITLogoStyle,
+.VITSubLogoStyle {
+  /* font-family: 'Times New Roman', !important; */
+  font-weight: bold !important;
+  padding-left: 10px !important;
+}
+
+#captchaCheck {
+  background: var(--main-txt-color) !important;
+  color: var(--main-bg-color) !important;
+  background-color: var(--main-link-color) !important;
+}
