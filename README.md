@@ -1,6 +1,6 @@
 # Enhancer-for-VIT-Vellore-Academics
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **LOOKING FOR MAINTAINERS**
@@ -56,10 +56,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Presto412"><img src="https://avatars.githubusercontent.com/u/26374855?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Priyansh Jain</b></sub></a><br /><a href="#ideas-Presto412" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=Presto412" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/Swarag-N"><img src="https://avatars.githubusercontent.com/u/46181010?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Swarag Narayanasetty</b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=Swarag-N" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Swarag-N"><img src="https://avatars.githubusercontent.com/u/46181010?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Swarag Narayanasetty</b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=Swarag-N" title="Code">💻</a> <a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/issues?q=author%3ASwarag-N" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/th3c0d3br34ker"><img src="https://avatars.githubusercontent.com/u/60807938?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jainam Desai</b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=th3c0d3br34ker" title="Code">💻</a> <a href="#maintenance-th3c0d3br34ker" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/Rishabhco"><img src="https://avatars.githubusercontent.com/u/83543522?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rishabh Agrawal</b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=Rishabhco" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sairamesh1642"><img src="https://avatars.githubusercontent.com/u/88195921?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sai Ramesh </b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=sairamesh1642" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rashisolanki"><img src="https://avatars.githubusercontent.com/u/74859024?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rashi Solanki</b></sub></a><br /><a href="https://github.com/IEEECS-VIT/enhancer-for-vit-vellore-academics/commits?author=rashisolanki" title="Code">💻</a> <a href="#design-rashisolanki" title="Design">🎨</a></td>
   </tr>
 </table>
 
