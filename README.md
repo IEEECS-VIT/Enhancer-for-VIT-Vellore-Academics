@@ -1,6 +1,9 @@
 # Enhancer-for-VIT-Vellore-Academics
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 **LOOKING FOR MAINTAINERS**
@@ -46,7 +49,7 @@ An awesome chrome extension that fixes a bunch of errors and adds some features 
 
 MIT
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
