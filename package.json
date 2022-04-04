@@ -1,0 +1,26 @@
+{
+  "name": "enhancer-for-vit-vellore-academics",
+  "description": "**LOOKING FOR MAINTAINERS**",
+  "version": "4.10.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IEEECS-VIT/Enhancer-for-VIT-Vellore-Academics.git"
+  },
+  "keywords": [
+    "vtop",
+    "vit",
+    "enhancer"
+  ],
+  "author": "IEEECS-VIT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IEEECS-VIT/Enhancer-for-VIT-Vellore-Academics/issues"
+  },
+  "homepage": "https://github.com/IEEECS-VIT/Enhancer-for-VIT-Vellore-Academics#readme",
+  "devDependencies": {
+    "all-contributors-cli": "^6.20.0"
+  }
+}
