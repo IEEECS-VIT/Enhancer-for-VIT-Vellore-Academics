@@ -1,0 +1,72 @@
+{
+  "projectName": "enhancer-for-vit-vellore-academics",
+  "projectOwner": "IEEECS-VIT",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "Presto412",
+      "name": "Priyansh Jain",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26374855?v=4",
+      "profile": "https://github.com/Presto412",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "Swarag-N",
+      "name": "Swarag Narayanasetty",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46181010?v=4",
+      "profile": "https://github.com/Swarag-N",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "th3c0d3br34ker",
+      "name": "Jainam Desai",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60807938?v=4",
+      "profile": "https://github.com/th3c0d3br34ker",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "Rishabhco",
+      "name": "Rishabh Agrawal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83543522?v=4",
+      "profile": "https://github.com/Rishabhco",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sairamesh1642",
+      "name": "Sai Ramesh ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88195921?v=4",
+      "profile": "https://github.com/sairamesh1642",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rashisolanki",
+      "name": "Rashi Solanki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74859024?v=4",
+      "profile": "https://github.com/rashisolanki",
+      "contributions": [
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
