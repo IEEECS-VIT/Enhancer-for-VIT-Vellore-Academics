@@ -11,7 +11,8 @@
     "storage",
     "declarativeContent",
     "activeTab",
-    "*://vtop.vit.ac.in/*"
+    "*://vtop.vit.ac.in/*",
+    "*://vconnect.vit.ac.in/*"
   ],
   "background": {
     "scripts": [
@@ -35,7 +36,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://vtop.vit.ac.in/*"
+        "*://vtop.vit.ac.in/*",
+        "*://vconnect.vit.ac.in/*"
       ],
       "js": [
         "bitmaps.js",
