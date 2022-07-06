@@ -3,14 +3,14 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('academics/common/StudentCoursePage')"
+      "loadmydiv('academics/common/StudentCoursePage','btnMenuForm')"
     );
     button.click();
   }
 
   if (request.message == "openDigitalAssignmentUpload") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('examinations/StudentDA')");
+    button.setAttribute("onclick", "loadmydiv('examinations/StudentDA','btnMenuForm')");
     button.click();
   }
 
@@ -18,14 +18,14 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('examinations/StudExamSchedule')"
+      "loadmydiv('examinations/StudExamSchedule','btnMenuForm')"
     );
     button.click();
   }
 
   if (request.message == "openMarksView") {
     const button = document.createElement("button");
-    button.setAttribute("onclick", "loadmydiv('examinations/StudentMarkView')");
+    button.setAttribute("onclick", "loadmydiv('examinations/StudentMarkView','btnMenuForm')");
     button.click();
   }
 
@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('academics/common/CalendarPreview')"
+      "loadmydiv('academics/common/CalendarPreview','btnMenuForm')"
     );
     button.click();
   }
@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('academics/common/StudentAttendance')"
+      "loadmydiv('academics/common/StudentAttendance','btnMenuForm')"
     );
     button.click();
   }
@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('academics/common/StudentTimeTable')"
+      "loadmydiv('academics/common/StudentTimeTable','btnMenuForm')"
     );
     button.click();
   }
@@ -60,7 +60,7 @@ chrome.runtime.onMessage.addListener((request) => {
     const button = document.createElement("button");
     button.setAttribute(
       "onclick",
-      "loadmydiv('event/swf/loadEventRegistration')"
+      "loadmydiv('event/swf/loadEventRegistration','btnMenuForm')"
     );
     button.click();
   }
